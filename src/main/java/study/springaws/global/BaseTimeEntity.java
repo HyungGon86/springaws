@@ -1,4 +1,4 @@
-package study.springaws.domain;
+package study.springaws.global;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
