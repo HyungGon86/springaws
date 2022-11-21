@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/header :: header">
+    <meta charset="UTF-8">
+    <title>Gon's Blog</title>
+</head>
+<style>
+    nav {
+        width: 20rem;
+        background-color: #eee;
+        border-right: 1px solid #ddd;
+        /* height:100% 그냥 적용 안됨. 부모개념이 있어야 채워질 수 있음 */
+        position: fixed; /*공중에 떠서 공간을 차지하지 않음*/
+        left: 0;
+        height: 100% /*fixed를 해서 높이 100%가 가능해짐*/
+    }
+
+    h1 {
+        font-size: 18px;
+        padding: 20px;
+    }
+
+    .menu {
+        list-style: none;
+    }
+
+    .menu li {
+        height: 2rem;
+        display: block;
+    }
+
+    #superCategory {
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    /*메뉴*/
+    .menu li a {
+        text-decoration: none;
+        color: black;
+        padding: 10px 10px 10px 10px;
+    }
+
+    .menu li a:hover {
+        background-color: #b4ffa4;
+    }
+
+    section {
+        padding: 20px 20px 20px 0;
+        margin-left: 20rem;
+    }
+
+    #navHead {
+        padding: 60px 20px 20px 20px;
+        text-align: center;
+    }
+
+    #navHead a {
+        text-decoration: none;
+        color: black;
+        margin-bottom: 2rem;
+    }
+
+    #navHead h3:hover, h5:hover {
+        background-color: #b4ffa4;
+    }
+
+</style>
+<body>
+
+<div class="container" style="margin: 0">
+    <div id="sideBar">
+        <nav>
+            <div id="navHead">
+                <a th:href="@{/}">
+                    <h3 style="margin-bottom: 2rem">Gon's Blog</h3>
+                </a>
+                <a href="#">
+                    <h5>NEW POST</h5>
+                </a>
+            </div>
+            <ul class="menu">
+                <li id="superCategory"><a href="#">전체글(갯수들어갈거)</a></li>
+                <div>
+                </div>
+                <div>
+                </div>
+                <li><a href="#">카테고리들어갈거임</a></li>
+                <li><a href="#">카테고리들어갈거임</a></li>
+                <li><a href="#">카테고리들어갈거임</a></li>
+                <li><a href="#">카테고리들어갈거임</a></li>
+                <li><a href="#">카테고리들어갈거임</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <section>
+        <h4>테스트</h4>
+    </section>
+
+</div>
+</body>
+</html>
