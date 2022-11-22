@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>사이드바</title>
+</head>
+<body>
+<th:block th:fragment="sidebar">
+    <div id="sideBar">
+        <nav>
+            <div id="navHead">
+                <a th:href="@{/static}">
+                    <h3 style="margin-bottom: 2rem">Gon's Blog</h3>
+                </a>
+                <a href="/post/write">
+                    <h5>NEW POST</h5>
+                </a>
+            </div>
+            <ul class="menu">
+                <li id="superCategory"><a href="#">전체글(갯수들어갈거)</a></li>
+                <div>
+                </div>
+                <div>
+                </div>
+                <li><a href="#">카테고리들어갈거임</a></li>
+                <li><a href="#">카테고리들어갈거임</a></li>
+                <li><a href="#">카테고리들어갈거임</a></li>
+                <li><a href="#">카테고리들어갈거임</a></li>
+                <li><a href="#">카테고리들어갈거임</a></li>
+            </ul>
+        </nav>
+    </div>
+</th:block>
+</body>
+</html>

@@ -8,6 +8,7 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import study.springaws.domain.category.domain.Category;
 import study.springaws.domain.comment.domain.Comment;
+import study.springaws.domain.file.domain.AttachedFile;
 import study.springaws.domain.user.domain.User;
 import study.springaws.global.BaseTimeEntity;
 
@@ -45,6 +46,9 @@ public class Post extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "post")
     private List<Comment> comments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "post")
+    private List<AttachedFile> files = new ArrayList<>();
 
     @Builder
     public Post(User user, Category category, String title, String content, Long hit, String thumbnailUrl) {

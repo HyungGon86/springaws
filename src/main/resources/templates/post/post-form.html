@@ -1,10 +1,54 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="layout/header :: header">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/fragments/header :: header">
     <meta charset="UTF-8">
-    <title>Gon's Blog - 글 작성</title>
+    <title>Gon's Blog</title>
 </head>
+<style>
+    section {
+        padding: 8rem 8rem 8rem 8rem;
+        margin-left: 20rem;
+    }
+
+    #attachDiv {
+        border: 1px solid lightgrey;
+        padding: 20px 20px 20px 20px;
+        border-radius: 5px;
+    }
+</style>
 <body>
 
+<div class="wrap">
+
+    <th:block th:replace="layout/fragments/sidebar :: sidebar"/>
+
+    <section>
+        <form th:action th:object="${postForm}" enctype="multipart/form-data" method="post">
+            <div class="form-group">
+                <label>카테고리</label>
+                <select class="form-select">
+                    <option>탭</option>
+                </select>
+            </div>
+            <div class="form-group mt-3">
+                <label th:for="title">제목</label>
+                <input type="text" class="form-control" th:field="*{title}" placeholder="제목을 입력하세요."/>
+            </div>
+
+            <div class="form-group mt-3">
+                <textarea class="board_content" id="summernote" name="board_content"></textarea>
+            </div>
+
+            <div class="form-group mt-3" id="attachDiv">
+                <button type="button" id="attachBtn" class="btn btn-secondary">파일첨부</button>
+            </div>
+        </form>
+
+        <input type="file" id="attachFiles" multiple="multiple" name="attachFiles" style="display: none">
+    </section>
+
+    <th:block th:replace="layout/fragments/footer :: footer"/>
+
+</div>
 </body>
 </html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:replace="layout/fragments/header :: header">
+    <meta charset="UTF-8">
+    <title>Gon's Blog</title>
+</head>
+<style>
+    section {
+        padding: 20px 20px 20px 0;
+        margin-left: 20rem;
+    }
+
+    footer {
+        margin-left: 20rem;
+        text-align: center;
+        padding: 10px 10px 10px 10px;
+        background: #e6e6e6;
+    }
+</style>
+<body>
+
+<div class="wrap">
+
+    <th:block th:replace="layout/fragments/sidebar :: sidebar"></th:block>
+
+    <section>
+        <h4>테스트</h4>
+    </section>
+
+    <footer class="footer">
+        <div>
+            <h5>
+                <span>Copyright ©Gon</span>
+            </h5>
+        </div>
+    </footer>
+
+</div>
+</body>
+</html>
