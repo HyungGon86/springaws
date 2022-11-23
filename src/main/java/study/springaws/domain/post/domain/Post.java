@@ -51,7 +51,7 @@ public class Post extends BaseTimeEntity {
     private List<AttachedFile> files = new ArrayList<>();
 
     @Builder
-    public Post(User user, Category category, String title, String content, Long hit, String thumbnailUrl) {
+    public Post(User user, Category category, String title, String content, String thumbnailUrl) {
 
         if (user != null) {
             setUser(user);
@@ -63,7 +63,6 @@ public class Post extends BaseTimeEntity {
 
         this.title = title;
         this.content = content;
-        this.hit = hit;
         this.thumbnailUrl = thumbnailUrl;
     }
 

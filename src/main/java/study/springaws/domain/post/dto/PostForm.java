@@ -2,19 +2,24 @@ package study.springaws.domain.post.dto;
 
 import lombok.Data;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 public class PostForm {
 
-    @NotEmpty
     private String category;
 
-    @NotEmpty
+    @NotBlank
     private String title;
 
-    @NotEmpty
+    @NotBlank
     private String content;
 
     private String thumbnailUrl;
+
+    private List<Long> fileList;
+
+    private List<Long> fileDeleteList = new ArrayList<>();
 }

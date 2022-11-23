@@ -19,9 +19,8 @@ public class AttachedFileApiController {
 
     @PostMapping("/upload")
     public List<UploadFileDto> saveFiles(@RequestParam List<MultipartFile> attachFiles) {
-
-        System.out.println("attachFiles = " + attachFiles);
-
         return fileService.fileSaveList(attachFiles);
     }
+
+
 }

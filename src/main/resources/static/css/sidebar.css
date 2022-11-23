@@ -44,6 +44,6 @@ nav {
     margin-bottom: 2rem;
 }
 
-#navHead h3:hover, h5:hover {
+#navHead h3:hover, #navHead h5:hover {
     background-color: #b4ffa4;
 }

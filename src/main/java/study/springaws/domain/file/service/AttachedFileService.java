@@ -32,7 +32,13 @@ public class AttachedFileService {
 
         attachedFileRepository.save(file);
 
-        return new UploadFileDto(file.getId(), file.getOriginalName(), file.getFilePath());
+        return new UploadFileDto(file.getId(), file.getOriginalName(), file.getSystemName());
+    }
+
+    private void deleteFilesToDisk(List<Long> fileId) {
+        List<AttachedFile> fileList = attachedFileRepository.findAllByIdInOrPostIsNull(fileId);
+
+        fileList.forEach(AttachedFile::fileDelete);
     }
 
     @Transactional
@@ -48,14 +54,8 @@ public class AttachedFileService {
     }
 
     @Transactional
-    public void fileUpdateBoardId(Post post, List<Long> filesId) {
+    public void fileUpdatePostId(Post post, List<Long> filesId) {
         attachedFileRepository.bulkFileUpdate(post, filesId);
-    }
-
-    private void deleteFilesToDisk(List<Long> fileId) {
-        List<AttachedFile> fileList = attachedFileRepository.findAllByIdInOrPostIsNull(fileId);
-
-        fileList.forEach(AttachedFile::fileDelete);
     }
 
     @Transactional
@@ -63,7 +63,7 @@ public class AttachedFileService {
 
         deleteFilesToDisk(fileId);
 
-        attachedFileRepository.bulkFileDeleteById(fileId);
+        attachedFileRepository.bulkFileDeleteByIdOrPostIsNull(fileId);
     }
 
 

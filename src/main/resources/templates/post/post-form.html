@@ -6,7 +6,7 @@
 </head>
 <style>
     section {
-        padding: 8rem 8rem 8rem 8rem;
+        padding: 6rem 8rem 8rem 8rem;
         margin-left: 20rem;
     }
 
@@ -14,6 +14,16 @@
         border: 1px solid lightgrey;
         padding: 20px 20px 20px 20px;
         border-radius: 5px;
+    }
+
+    #fileUl {
+        list-style: none;
+        padding-left: 0;
+    }
+
+    .fileList {
+        float: left;
+        margin-right: 1rem;
     }
 </style>
 <body>
@@ -23,7 +33,7 @@
     <th:block th:replace="layout/fragments/sidebar :: sidebar"/>
 
     <section>
-        <form th:action th:object="${postForm}" enctype="multipart/form-data" method="post">
+        <form th:action th:object="${postForm}" id="postForm" enctype="multipart/form-data" method="post">
             <div class="form-group">
                 <label>카테고리</label>
                 <select class="form-select">
@@ -36,15 +46,31 @@
             </div>
 
             <div class="form-group mt-3">
-                <textarea class="board_content" id="summernote" name="board_content"></textarea>
+                <textarea id="summernote" th:field="*{content}"></textarea>
             </div>
 
-            <div class="form-group mt-3" id="attachDiv">
-                <button type="button" id="attachBtn" class="btn btn-secondary">파일첨부</button>
-            </div>
         </form>
 
-        <input type="file" id="attachFiles" multiple="multiple" name="attachFiles" style="display: none">
+        <div class="form-group mt-3" id="attachDiv">
+            <div>
+                <button type="button" id="attachBtn" class="btn btn-secondary">파일첨부</button>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col">
+                    <ul id="fileUl"></ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-3" style="float: right">
+            <div class="col">
+                <button type="button" class="btn btn-dark" id="cancelBtn">취소</button>
+                <button type="button" class="btn btn-primary" id="registerBtn">등록</button>
+            </div>
+        </div>
+
+        <input type="file" id="attachFiles" multiple="multiple" style="display: none">
     </section>
 
     <th:block th:replace="layout/fragments/footer :: footer"/>

@@ -19,6 +19,6 @@ public interface AttachedFileRepository extends JpaRepository<AttachedFile, Long
 
     @Modifying
     @Query("delete from AttachedFile f where f.id in :fileId or f.post is null")
-    void bulkFileDeleteById(@Param("fileId") List<Long> fileId);
+    void bulkFileDeleteByIdOrPostIsNull(@Param("fileId") List<Long> fileId);
 
 }
