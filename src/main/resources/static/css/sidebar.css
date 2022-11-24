@@ -5,7 +5,8 @@ nav {
     /* height:100% 그냥 적용 안됨. 부모개념이 있어야 채워질 수 있음 */
     position: fixed; /*공중에 떠서 공간을 차지하지 않음*/
     left: 0;
-    height: 100% /*fixed를 해서 높이 100%가 가능해짐*/
+    height: 100%; /*fixed를 해서 높이 100%가 가능해짐*/
+
 }
 
 .menu {
@@ -18,7 +19,7 @@ nav {
 }
 
 #superCategory {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     margin-bottom: 1.5rem;
 }
 
@@ -26,11 +27,11 @@ nav {
 .menu li a {
     text-decoration: none;
     color: black;
-    padding: 10px 10px 10px 10px;
+    padding: 10px 0px 10px 10px;
 }
 
 .menu li a:hover {
-    background-color: #b4ffa4;
+    background-color: #d2f4ea;
 }
 
 #navHead {
@@ -45,5 +46,9 @@ nav {
 }
 
 #navHead h3:hover, #navHead h5:hover {
-    background-color: #b4ffa4;
+    background-color: #d2f4ea;
+}
+
+#categoryEdit:active {
+    opacity: 0.5;
 }

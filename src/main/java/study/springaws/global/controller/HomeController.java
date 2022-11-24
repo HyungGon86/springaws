@@ -14,4 +14,10 @@ public class HomeController {
         return "home";
     }
 
+    @GetMapping("/login")
+    public String loginForm() {
+        log.info("로그인 페이지 이동");
+        return "login/loginForm";
+    }
+
 }

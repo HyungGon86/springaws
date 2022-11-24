@@ -26,11 +26,11 @@ spring:
       client:
         registration:
           google:
-            client-id: 440169512538-kv9mc3hvr2qevdhii4lcvuc2v33mfjhu.apps.googleusercontent.com
-            client-secret: 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
+            client-id: 440169512538-1005ef9rqk59vrjou92vahrjfre7enum.apps.googleusercontent.com
+            client-secret: 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
             scope:
               - email
-              - public_profile
+              - profile
 
 
 logging:

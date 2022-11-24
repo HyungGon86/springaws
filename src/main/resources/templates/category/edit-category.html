@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/fragments/header :: header">
+  <meta charset="UTF-8">
+  <title>Gon's Blog</title>
+</head>
+<style>
+  section {
+    padding: 20px 20px 20px 20px;
+    margin-left: 20rem;
+  }
+
+  .wrap {
+    background: #efefef;
+  }
+
+</style>
+<body>
+
+<div class="wrap">
+
+  <th:block th:replace="layout/fragments/sidebar :: sidebar"/>
+
+  <section>
+    <h5>카테고리 편집하는거 만들 예정임</h5>
+  </section>
+
+  <th:block th:replace="layout/fragments/footer :: footer"/>
+
+</div>
+</body>
+</html>

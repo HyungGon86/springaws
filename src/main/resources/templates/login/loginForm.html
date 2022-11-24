@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/fragments/header :: header">
+    <meta charset="UTF-8">
+    <title>Gon's Blog</title>
+</head>
+<style>
+    section {
+        padding: 20px 20px 20px 20px;
+        margin-left: 20rem;
+    }
+
+    .login-section {
+        height: 90vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .login-box {
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+        width: 30rem;
+    }
+
+    .btn-google {
+        background-color: #dd4b39;
+        background-image: url("/img/google-icon.png");
+    }
+
+    .btnCtm {
+        border: none;
+        background-position: 1em;
+        background-repeat: no-repeat;
+        background-size: 2em;
+        border-radius: 0.5em;
+        color: white;
+        font-size: 15px;
+        line-height: 1em;
+        padding: 0 2em 0 4em;
+        text-decoration: none;
+        transition: all 0.5s;
+        height: 50px;
+        width: 200px;
+        margin-bottom: 5px;
+        box-shadow: 0px 4px 8px rgb(38 38 38 / 20%);
+    }
+</style>
+<body>
+
+<div class="wrap" style="background-color: #efefef">
+
+    <th:block th:replace="layout/fragments/sidebar :: sidebar"/>
+
+    <section class="login-section">
+        <div class="card container login-box">
+            <div class="d-flex flex-column card-body align-items-center justify-content-center">
+                <h5>SNS 간편 가입/로그인</h5>
+                <hr>
+                <div class="col">
+                    <a href="/oauth2/authorization/google">
+                        <button type="button" class="btnCtm btn-google">구글 로그인</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <th:block th:replace="layout/fragments/footer :: footer"/>
+
+</div>
+</body>
+</html>

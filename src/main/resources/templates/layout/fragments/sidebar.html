@@ -11,7 +11,7 @@
     <div id="sideBar">
         <nav>
             <div id="navHead">
-                <a th:href="@{/static}">
+                <a th:href="@{/}">
                     <h3 style="margin-bottom: 2rem">Gon's Blog</h3>
                 </a>
                 <a href="/post/write">
@@ -19,16 +19,21 @@
                 </a>
             </div>
             <ul class="menu">
-                <li id="superCategory"><a href="#">전체글(갯수들어갈거)</a></li>
-                <div>
-                </div>
-                <div>
-                </div>
+                <li class="border-top my-3"></li>
+                <li id="superCategory">
+                    <a href="#">전체글(갯수들어갈거)</a>
+                    <a href="/edit/category" id="categoryEdit">
+                        <i class="fa-solid fa-pen"></i>
+                    </a>
+                </li>
+
                 <li><a href="#">카테고리들어갈거임</a></li>
                 <li><a href="#">카테고리들어갈거임</a></li>
                 <li><a href="#">카테고리들어갈거임</a></li>
                 <li><a href="#">카테고리들어갈거임</a></li>
                 <li><a href="#">카테고리들어갈거임</a></li>
+                <li class="border-top my-3"></li>
+                <li><a href="/login">로그인</a></li>
             </ul>
         </nav>
     </div>

@@ -41,10 +41,8 @@ public class Comment extends BaseTimeEntity {
 
     private boolean secret;
 
-    private int tier;
-
     @Builder
-    public Comment(User user, Post post, Comment parent, String content, boolean secret, int tier) {
+    public Comment(User user, Post post, Comment parent, String content, boolean secret) {
 
         if (user != null) {
             setUser(user);
@@ -60,7 +58,6 @@ public class Comment extends BaseTimeEntity {
 
         this.content = content;
         this.secret = secret;
-        this.tier = tier;
     }
 
     /* 연관관계 메서드 */
