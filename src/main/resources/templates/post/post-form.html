@@ -9,11 +9,6 @@
 <script th:src="@{/js/postwrite.js}"></script>
 <link rel="stylesheet" th:href="@{/css/summernote/summernote-lite.css}">
 <style>
-    #content {
-        padding: 6rem 8rem 8rem 8rem;
-        margin-left: 20rem;
-    }
-
     #attachDiv {
         border: 1px solid lightgrey;
         padding: 20px 20px 20px 20px;
@@ -39,57 +34,74 @@
 </style>
 <body>
 
-<div class="wrap">
+<section class="row g-0 row-cols-xxl-2 g-xxl-0 p-0 ">
 
+    <!-- sidebar-xxl -->
     <div class="bg-light sidebar col-xxl-2 d-none d-xxl-block p-0 overflow-auto">
         <div class="p-4 sidebar-inner bg-light">
             <div th:replace="layout/fragments/sidebar.html :: sideBar"></div>
         </div>
     </div>
-
-    <div id="content">
-
-        <div class="row p-5 writeWrap">
-            <form th:action th:object="${postForm}" id="postForm" enctype="multipart/form-data" method="post">
-                <div class="col">
-                    <label>카테고리</label>
-                    <select class="form-select">
-                        <option>탭</option>
-                    </select>
-                </div>
-                <div class="col mt-3">
-                    <label th:for="title">제목</label>
-                    <input type="text" class="form-control" th:field="*{title}" placeholder="제목을 입력하세요."/>
-                </div>
-
-                <div class="col mt-3">
-                    <textarea id="summernote" th:field="*{content}"></textarea>
-                </div>
-
-            </form>
-
-            <div class="col-12 mt-3">
-                <div id="attachDiv">
-                    <button type="button" id="attachBtn" class="btn btn-secondary">파일첨부</button>
-
-                    <ul id="fileUl"></ul>
-                </div>
-            </div>
-
-            <div class="col mt-3">
-                <div style="float: right">
-                    <button type="button" class="btn btn-dark" id="cancelBtn">취소</button>
-                    <button type="button" class="btn btn-primary" id="registerBtn">등록</button>
-                </div>
-            </div>
-        </div>
-
-
-        <input type="file" id="attachFiles" multiple="multiple" style="display: none">
+    <div class="bg-light col-xxl-2 d-none d-xxl-block p-0">
     </div>
 
-    <th:block th:replace="layout/fragments/footer :: footer"/>
+    <!-- sections -->
+    <div class="col-xxl-10 p-0 sections-container">
 
-</div>
+
+        <section>
+
+            <div style="margin-bottom: 100px"></div>
+
+            <div id="container">
+
+                <div class="row p-5 writeWrap">
+                    <form th:action th:object="${postForm}" id="postForm" enctype="multipart/form-data" method="post">
+                        <div class="col">
+                            <label>카테고리</label>
+                            <select class="form-select">
+                                <option>탭</option>
+                            </select>
+                        </div>
+                        <div class="col mt-3">
+                            <label th:for="title">제목</label>
+                            <input type="text" class="form-control" th:field="*{title}" placeholder="제목을 입력하세요."/>
+                        </div>
+
+                        <div class="col mt-3">
+                            <textarea id="summernote" th:field="*{content}"></textarea>
+                        </div>
+
+                    </form>
+
+                    <div class="col-12 mt-3">
+                        <div id="attachDiv">
+                            <button type="button" id="attachBtn" class="btn btn-secondary">파일첨부</button>
+
+                            <ul id="fileUl"></ul>
+                        </div>
+                    </div>
+
+                    <div class="col mt-3">
+                        <div style="float: right">
+                            <button type="button" class="btn btn-dark" id="cancelBtn">취소</button>
+                            <button type="button" class="btn btn-primary" id="registerBtn">등록</button>
+                        </div>
+                    </div>
+                </div>
+
+
+                <input type="file" id="attachFiles" multiple="multiple" style="display: none">
+            </div>
+        </section>
+
+        <footer class="footer bg-light mt-5">
+            <div class="container text-center p-2">
+                <h5><span class="text-muted">Copyright ©Gon</span></h5>
+            </div>
+        </footer>
+    </div>
+</section>
+
 </body>
 </html>
