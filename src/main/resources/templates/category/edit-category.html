@@ -35,16 +35,16 @@
                 <div class="row g-0">
                     <div id="categoryBox"
                          class="categoryBox list-group list-unstyled ps-0 d-flex flex-column col-sm mb-5 text-center">
-                        <th:block th:each="superCategory : ${superCategory}">
+                        <th:block th:each="super : ${superCategory}">
                             <button class="list-group-item list-group-item-action list-group-item-light fw-bold"
-                                    th:text="|${superCategory.name}|"
-                                    th:id="|superCategory-${superCategory.id}|"
+                                    th:text="|${super.name}|"
+                                    th:id="|superCategory-${super.id}|"
                                     onclick="clickCategory(this)"></button>
                             <th:block
-                                    th:each="subCategory : ${subCategory}">
+                                    th:each="sub : ${subCategory}">
                                 <button class="list-group-item-action list-group-item-light list-group-item"
-                                        th:text="|${subCategory.name}|"
-                                        th:id="|subCategory-${subCategory.id}|"
+                                        th:text="|${sub.name}|"
+                                        th:id="|subCategory-${sub.id}|"
                                         onclick="clickCategory(this)"></button>
                             </th:block>
                         </th:block>
