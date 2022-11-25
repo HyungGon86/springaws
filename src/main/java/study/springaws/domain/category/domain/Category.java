@@ -32,22 +32,16 @@ public class Category extends BaseTimeEntity {
 
     private int tier;
 
-    private int pSortNum;
-
-    private int cSortNum;
-
     @OneToMany(mappedBy = "category")
     private List<Post> posts = new ArrayList<>();
 
     @Builder
-    public Category(Category parent, String name, int tier, int pSortNum, int cSortNum) {
+    public Category(Category parent, String name, int tier) {
         if (parent != null) {
             setParent(parent);
         }
         this.name = name;
         this.tier = tier;
-        this.pSortNum = pSortNum;
-        this.cSortNum = cSortNum;
     }
 
     /* 연관관계 메서드 */

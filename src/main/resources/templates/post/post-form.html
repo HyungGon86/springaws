@@ -9,7 +9,7 @@
 <script th:src="@{/js/postwrite.js}"></script>
 <link rel="stylesheet" th:href="@{/css/summernote/summernote-lite.css}">
 <style>
-    section {
+    #content {
         padding: 6rem 8rem 8rem 8rem;
         margin-left: 20rem;
     }
@@ -29,53 +29,64 @@
         float: left;
         margin-right: 1rem;
     }
+
+    .writeWrap {
+        border: 1px solid black;
+        border-radius: 5px;
+        box-shadow: 0 4px 8px rgb(38 38 38 / 20%);
+        background: white;
+    }
 </style>
 <body>
 
 <div class="wrap">
 
-    <th:block th:replace="layout/fragments/sidebar :: sidebar"/>
+    <div class="bg-light sidebar col-xxl-2 d-none d-xxl-block p-0 overflow-auto">
+        <div class="p-4 sidebar-inner bg-light">
+            <div th:replace="layout/fragments/sidebar.html :: sideBar"></div>
+        </div>
+    </div>
 
-    <section>
-        <form th:action th:object="${postForm}" id="postForm" enctype="multipart/form-data" method="post">
-            <div class="form-group">
-                <label>카테고리</label>
-                <select class="form-select">
-                    <option>탭</option>
-                </select>
-            </div>
-            <div class="form-group mt-3">
-                <label th:for="title">제목</label>
-                <input type="text" class="form-control" th:field="*{title}" placeholder="제목을 입력하세요."/>
-            </div>
+    <div id="content">
 
-            <div class="form-group mt-3">
-                <textarea id="summernote" th:field="*{content}"></textarea>
-            </div>
-
-        </form>
-
-        <div class="form-group mt-3" id="attachDiv">
-            <div>
-                <button type="button" id="attachBtn" class="btn btn-secondary">파일첨부</button>
-            </div>
-
-            <div class="row mt-3">
+        <div class="row p-5 writeWrap">
+            <form th:action th:object="${postForm}" id="postForm" enctype="multipart/form-data" method="post">
                 <div class="col">
+                    <label>카테고리</label>
+                    <select class="form-select">
+                        <option>탭</option>
+                    </select>
+                </div>
+                <div class="col mt-3">
+                    <label th:for="title">제목</label>
+                    <input type="text" class="form-control" th:field="*{title}" placeholder="제목을 입력하세요."/>
+                </div>
+
+                <div class="col mt-3">
+                    <textarea id="summernote" th:field="*{content}"></textarea>
+                </div>
+
+            </form>
+
+            <div class="col-12 mt-3">
+                <div id="attachDiv">
+                    <button type="button" id="attachBtn" class="btn btn-secondary">파일첨부</button>
+
                     <ul id="fileUl"></ul>
+                </div>
+            </div>
+
+            <div class="col mt-3">
+                <div style="float: right">
+                    <button type="button" class="btn btn-dark" id="cancelBtn">취소</button>
+                    <button type="button" class="btn btn-primary" id="registerBtn">등록</button>
                 </div>
             </div>
         </div>
 
-        <div class="row mt-3" style="float: right">
-            <div class="col">
-                <button type="button" class="btn btn-dark" id="cancelBtn">취소</button>
-                <button type="button" class="btn btn-primary" id="registerBtn">등록</button>
-            </div>
-        </div>
 
         <input type="file" id="attachFiles" multiple="multiple" style="display: none">
-    </section>
+    </div>
 
     <th:block th:replace="layout/fragments/footer :: footer"/>
 

@@ -1,73 +1,58 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head th:replace="layout/fragments/header :: header">
     <meta charset="UTF-8">
     <title>Gon's Blog</title>
 </head>
-<style>
-    section {
-        padding: 20px 20px 20px 20px;
-        margin-left: 20rem;
-    }
-
-    .login-section {
-        height: 90vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .login-box {
-        padding-top: 2rem;
-        padding-bottom: 2rem;
-        width: 30rem;
-    }
-
-    .btn-google {
-        background-color: #dd4b39;
-        background-image: url("/img/google-icon.png");
-    }
-
-    .btnCtm {
-        border: none;
-        background-position: 1em;
-        background-repeat: no-repeat;
-        background-size: 2em;
-        border-radius: 0.5em;
-        color: white;
-        font-size: 15px;
-        line-height: 1em;
-        padding: 0 2em 0 4em;
-        text-decoration: none;
-        transition: all 0.5s;
-        height: 50px;
-        width: 200px;
-        margin-bottom: 5px;
-        box-shadow: 0px 4px 8px rgb(38 38 38 / 20%);
-    }
-</style>
+<link rel="stylesheet" th:href="@{/css/login.css}">
 <body>
 
-<div class="wrap" style="background-color: #efefef">
+<section class="row g-0 row-cols-xxl-2 g-xxl-0 p-0 ">
 
-    <th:block th:replace="layout/fragments/sidebar :: sidebar"/>
+    <!-- sidebar-xxl -->
+    <div class="bg-light sidebar col-xxl-2 d-none d-xxl-block p-0 overflow-auto">
+        <div class="p-4 sidebar-inner bg-light">
+            <div th:replace="layout/fragments/sidebar.html :: sideBar"></div>
+        </div>
+    </div>
+    <div class="bg-light col-xxl-2 d-none d-xxl-block p-0">
+    </div>
 
-    <section class="login-section">
-        <div class="card container login-box">
-            <div class="d-flex flex-column card-body align-items-center justify-content-center">
-                <h5>SNS 간편 가입/로그인</h5>
-                <hr>
-                <div class="col">
-                    <a href="/oauth2/authorization/google">
-                        <button type="button" class="btnCtm btn-google">구글 로그인</button>
-                    </a>
+    <!-- sections -->
+    <div class="col-xxl-10 p-0 sections-container">
+
+
+        <section class="login-section">
+
+            <div class=""></div>
+
+            <div class="card container login-box">
+                <P class="text-center alert" id="capsAlert" th:text="${errMsg}">로그인 오류</P>
+                <div class="d-flex flex-column card-body align-items-center justify-content-center">
+                    <h5>
+                        SNS 간편 가입/로그인
+                    </h5>
+
+                    <hr/>
+
+                    <div class="col m-2">
+                        <a href="/oauth2/authorization/google">
+                            <button class="btnCtm btn-google">구글 로그인</button>
+                        </a>
+                    </div>
+
                 </div>
             </div>
-        </div>
-    </section>
 
-    <th:block th:replace="layout/fragments/footer :: footer"/>
 
-</div>
+        </section>
+
+        <footer class="footer bg-light mt-5">
+            <div class="container text-center p-2">
+                <h5><span class="text-muted">Copyright ©Gon</span></h5>
+            </div>
+        </footer>
+    </div>
+</section>
 </body>
 </html>

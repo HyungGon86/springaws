@@ -23,6 +23,9 @@ public class User extends BaseTimeEntity {
     private Long id;
 
     @Column(nullable = false)
+    private String username;
+
+    @Column(nullable = false)
     private String email;
 
     private String password;
@@ -46,7 +49,8 @@ public class User extends BaseTimeEntity {
     private List<Comment> comments = new ArrayList<>();
 
     @Builder
-    public User(String email, String password, String imgUrl, String nickname, Role role, String provider, String providerId) {
+    public User(String username, String email, String password, String imgUrl, String nickname, Role role, String provider, String providerId) {
+        this.username = username;
         this.email = email;
         this.password = password;
         this.imgUrl = imgUrl;

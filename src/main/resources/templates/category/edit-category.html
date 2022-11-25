@@ -1,32 +1,261 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head th:replace="layout/fragments/header :: header">
-  <meta charset="UTF-8">
-  <title>Gon's Blog</title>
+    <meta charset="UTF-8">
+    <title>Gon's Blog</title>
 </head>
-<style>
-  section {
-    padding: 20px 20px 20px 20px;
-    margin-left: 20rem;
-  }
 
-  .wrap {
-    background: #efefef;
-  }
-
-</style>
 <body>
 
-<div class="wrap">
+<section class="row g-0 row-cols-xxl-2 g-xxl-0 p-0 ">
 
-  <th:block th:replace="layout/fragments/sidebar :: sidebar"/>
+    <!-- sidebar-xxl -->
+    <div class="bg-light sidebar col-xxl-2 d-none d-xxl-block p-0 overflow-auto">
+        <div class="p-4 sidebar-inner bg-light">
+            <div th:replace="layout/fragments/sidebar.html :: sideBar"></div>
+        </div>
+    </div>
+    <div class="bg-light col-xxl-2 d-none d-xxl-block p-0">
+    </div>
 
-  <section>
-    <h5>카테고리 편집하는거 만들 예정임</h5>
-  </section>
+    <!-- sections -->
+    <div class="col-xxl-10 p-0 sections-container">
 
-  <th:block th:replace="layout/fragments/footer :: footer"/>
 
-</div>
+        <section>
+
+            <div style="margin-bottom: 100px"></div>
+
+            <div class="container">
+
+
+                <h1 class="text-center">카테고리 편집</h1>
+                <hr class="mb-5">
+
+                <div class="row g-0">
+                    <div id="categoryBox"
+                         class="categoryBox list-group list-unstyled ps-0 d-flex flex-column col-sm mb-5 text-center">
+                        <th:block th:each="superCategory : ${superCategory}">
+                            <button class="list-group-item list-group-item-action list-group-item-light fw-bold"
+                                    th:text="|${superCategory.name}|"
+                                    th:id="|superCategory-${superCategory.id}|"
+                                    onclick="clickCategory(this)"></button>
+                            <th:block
+                                    th:each="subCategory : ${subCategory}">
+                                <button class="list-group-item-action list-group-item-light list-group-item"
+                                        th:text="|${subCategory.name}|"
+                                        th:id="|subCategory-${subCategory.id}|"
+                                        onclick="clickCategory(this)"></button>
+                            </th:block>
+                        </th:block>
+                    </div>
+
+                    <div class="col-sm g-0 ms-sm-5">
+                        <div class="mb-5 ">
+                            <label for="categoryName">카테고리 이름 변경</label>
+                            <input type="text" class="form-control" id="categoryName">
+                        </div>
+                        <div class="d-flex flex-column align-items-center">
+                            <div>
+                                <button class="category-nav-btn " onclick="categoryUp()"><i class="fas fa-angle-up"></i>
+                                </button>
+                                <button class="category-nav-btn " onclick="categoryDown()"><i
+                                        class="fas fa-angle-down"></i></i></button>
+                            </div>
+                            <div>
+                                <button class="category-nav-btn " onclick="tierUp()"><i class="fas fa-chevron-left"></i>
+                                </button>
+                                <button class=" category-nav-btn " onclick="tierDown()"><i
+                                        class="fas fa-chevron-right"></i></button>
+                            </div>
+                            <div>
+                                <button class=" category-nav-btn " onclick="addCategory()"><i class="fas fa-plus"></i>
+                                </button>
+                                <button class="category-nav-btn " onclick="deleteCategory()"><i
+                                        class="fas fa-minus"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container mt-5">
+                <div class="row justify-content-center g-0">
+                    <button class="btn btn-secondary col-3 me-5">적 용</button>
+                    <button class="btn btn-secondary col-3" onclick="history.back()">취 소</button>
+                </div>
+            </div>
+            <div style="margin-bottom:  100px"></div>
+
+
+            <script th:inline="javascript">
+
+                // // 재사용할 dto
+                // const categorysList = [[${categoryForEdit}]];
+                // let idxNewCategoryNum = 0;
+                // const categoryName = document.getElementById("categoryName");
+                //
+                // // DIV 셀렉터
+                // let selector;
+                // // DTO 카테고리 셀렉터
+                // let category;
+                //
+                // // 카테고리명 유효성 검사
+                // function checkCategoryName(){
+                //   const categoryList = document.getElementById("categoryBox").childNodes;
+                //   for (let i = 0; i<categoryList.length; i++) {
+                //     const curNode = categoryList[i];
+                //
+                //     if(curNode.textContent === ""||curNode.textContent === " "){
+                //       alert("카테고리 명이 공백이면 안됩니다.");
+                //       return  true;
+                //     }
+                //
+                //     for(let j = i+1; j<categoryList.length; j++){
+                //       if(curNode.textContent === categoryList[j].textContent){
+                //         alert("카테고리 명이 중복되면 안됩니다.");
+                //         return  true;
+                //       }
+                //     }
+                //   }
+                //   return false;
+                // }
+                //
+                // function clickCategory(div) {
+                //
+                //   if(checkCategoryName()){
+                //     return;
+                //   }
+                //
+                //   selector = div;
+                //   categoryName.value = selector.innerText;
+                //   category = categorysList.find(x => x.title === selector.innerText);
+                //   const childNodes = selector.parentNode.childNodes;
+                //
+                //   for (const childNode of childNodes) {
+                //     childNode.classList.remove("active");
+                //   }
+                //
+                //   selector.classList.add("active");
+                //
+                // }
+                //
+                // categoryName.addEventListener("keyup", () => {
+                //   selector.innerText = categoryName.value;
+                //   category.title = selector.innerText;
+                // })
+                //
+                // function swapToPrevious(title){
+                //
+                //   const index = categorysList.findIndex(x=>x.title === title);
+                //
+                //   let tmp = categorysList[index-1];
+                //   categorysList[index-1] = categorysList[index];
+                //   categorysList[index] = tmp;
+                // }
+                //
+                // function swapToNextInDto(title){
+                //
+                //   const index = categorysList.findIndex(x=>x.title === title);
+                //
+                //   let tmp = categorysList[index+1];
+                //   categorysList[index+1] = categorysList[index];
+                //   categorysList[index] = tmp;
+                // }
+                //
+                // function categoryUp() {
+                //
+                //   const categoryTitle = selector.innerText;
+                //
+                //   // 선택 카테고리가 부모일때
+                //   if (selector.previousSibling != null) {
+                //
+                //     swapToPrevious(categoryTitle);
+                //     selector.parentNode.insertBefore(selector, selector.previousSibling);
+                //
+                //   }
+                // }
+                //
+                // function categoryDown() {
+                //
+                //   const categoryTitle = selector.innerText;
+                //
+                //   // 선택 카테고리가 부모일때
+                //   if (selector.nextSibling.nextSibling != null) {
+                //
+                //     swapToNextInDto(categoryTitle);
+                //     selector.parentNode.insertBefore(selector, selector.nextSibling.nextSibling);
+                //   }
+                //   else if(selector.nextSibling.nextSibling == null) {
+                //     swapToNextInDto(categoryTitle);
+                //     selector.parentNode.appendChild(selector);
+                //   }
+                // }
+                //
+                // function tierUp(){
+                //   category.tier = 1;
+                //   selector.classList.add("fw-bold");
+                //
+                // }
+                //
+                // function tierDown(){
+                //   category.tier = 2;
+                //   selector.classList.remove("fw-bold");
+                // }
+                //
+                // function addCategory(){
+                //   const box = document.getElementById("categoryBox");
+                //   box.innerHTML +=`<button class="list-group-item-action list-group-item-light list-group-item" onclick="clickCategory(this)">새 카테고리${idxNewCategoryNum}</button>`
+                //
+                //   let newCategory = {};
+                //   newCategory.id = null;
+                //   newCategory.title = '새 카테고리'+idxNewCategoryNum++;
+                //   newCategory.tier = 2;
+                //   newCategory.count = 0;
+                //   newCategory.porder = 0;
+                //   newCategory.corder = 0;
+                //
+                //   categorysList.push(newCategory);
+                // }
+                //
+                // function deleteCategory(){
+                //   const categoryIndex = categorysList.findIndex(x=>x.title === selector.innerText);
+                //   categorysList.splice(categoryIndex,1);
+                //   selector.remove();
+                // }
+                //
+                // function changeCategory(){
+                //   if(checkCategoryName()){
+                //     return;
+                //   }
+                //
+                //   let token = getCsrfToken();
+                //   const xhr = new XMLHttpRequest();
+                //   xhr.open("POST", "/category/edit");
+                //   xhr.setRequestHeader("content-type", "application/json");
+                //   xhr.setRequestHeader("X-XSRF-TOKEN", token);
+                //   xhr.send(JSON.stringify(categorysList));
+                //
+                //   xhr.onload = () => {
+                //     if (xhr.status === 200 || xhr.status === 201 || xhr.status === 202) {
+                //       location.href='/';
+                //     }
+                //     else{
+                //       alert(xhr.response);
+                //     }
+                //   }
+                // }
+
+            </script>
+
+        </section>
+
+        <footer class="footer bg-light mt-5">
+            <div class="container text-center p-2">
+                <h5><span class="text-muted">Copyright ©Gon</span></h5>
+            </div>
+        </footer>
+    </div>
+</section>
 </body>
 </html>

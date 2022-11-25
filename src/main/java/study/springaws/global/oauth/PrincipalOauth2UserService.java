@@ -35,14 +35,15 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
             log.info("현재 구글 로그인 서비스만 지원하고 있습니다.");
         }
 
-        String email = oauth2UserInfo.getEmail();
+        String username = oauth2UserInfo.getProvider() + "_" + oauth2UserInfo.getProviderId();
         String password = bCryptPasswordEncoder.encode("gudrhs11");
 
-        User userEntity = userRepository.findByEmail(email);
+        User userEntity = userRepository.findByUsername(username);
 
         if (userEntity == null) {
             userEntity = User.builder()
-                    .email(email)
+                    .username(username)
+                    .email(oauth2UserInfo.getEmail())
                     .password(password)
                     .role(Role.MANAGER)
                     .nickname(oauth2UserInfo.getName())

@@ -1,28 +1,37 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head th:replace="layout/fragments/header :: header">
     <meta charset="UTF-8">
     <title>Gon's Blog</title>
 </head>
-<style>
-    section {
-        padding: 20px 20px 20px 20px;
-        margin-left: 20rem;
-    }
 
-</style>
 <body>
 
-<div class="wrap" style="background: #efefef">
+<section class="row g-0 row-cols-xxl-2 g-xxl-0 p-0 ">
 
-    <th:block th:replace="layout/fragments/sidebar :: sidebar"/>
+    <!-- sidebar-xxl -->
+    <div class="bg-light sidebar col-xxl-2 d-none d-xxl-block p-0 overflow-auto">
+        <div class="p-4 sidebar-inner bg-light">
+            <div th:replace="layout/fragments/sidebar.html :: sideBar"></div>
+        </div>
+    </div>
+    <div class="bg-light col-xxl-2 d-none d-xxl-block p-0">
+    </div>
 
-    <section style="min-height: 96vh">
-        <h5>테스트</h5>
-    </section>
+    <!-- sections -->
+    <div class="col-xxl-10 p-0 sections-container">
 
-    <th:block th:replace="layout/fragments/footer :: footer"/>
 
-</div>
+        <section>
+            <h5>테스트</h5>
+        </section>
+
+        <footer class="footer bg-light mt-5">
+            <div class="container text-center p-2">
+                <h5><span class="text-muted">Copyright ©Gon</span></h5>
+            </div>
+        </footer>
+    </div>
+</section>
 </body>
 </html>

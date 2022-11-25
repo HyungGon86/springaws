@@ -159,25 +159,6 @@ window.onload = function () {
     document.getElementById('registerBtn').addEventListener('click', () => {
 
         const image = document.querySelectorAll(".note-editable img"); // 게시물에 찐막으로 남아잇는 이미지태그
-        // const fileList = document.querySelectorAll('input[name="fileList"]');
-        //
-        // for (const list of fileList) {
-        //
-        //     for (const img of image) {
-        //         const pathDot = list.dataset.path.lastIndexOf('\\');
-        //         const imgDot = img.src.lastIndexOf('/');
-        //
-        //         const listName = list.dataset.path.substring(pathDot + 1);
-        //         const imgName = img.src.substring(imgDot + 1);
-        //
-        //         if (listName === imgName) {
-        //             list.setAttribute('name', 'fileList');
-        //             break;
-        //         } else {
-        //             list.setAttribute('name', 'fileDeleteList');
-        //         }
-        //     }
-        // }
 
         const content = document.querySelector(".note-editable");
         let str = '';
@@ -192,7 +173,6 @@ window.onload = function () {
             content.focus();
             return;
         }
-
 
         document.getElementById('postForm').submit();
     });
