@@ -45,13 +45,20 @@ public class Category extends BaseTimeEntity {
     }
 
     /* 연관관계 메서드 */
-    private void setParent(Category parent) {
+    public void setParent(Category parent) {
         this.parent = parent;
-        parent.getChild().add(this);
+        if (parent != null) {
+            parent.getChild().add(this);
+        }
     }
 
     /* 비즈니스 메서드 */
     public void changeName(String name) {
         this.name = name;
     }
+
+    public void changeTier(int tier) {
+        this.tier = tier;
+    }
+
 }

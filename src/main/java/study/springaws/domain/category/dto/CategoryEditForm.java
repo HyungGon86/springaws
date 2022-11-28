@@ -3,6 +3,7 @@ package study.springaws.domain.category.dto;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @Data
 public class CategoryEditForm {
@@ -15,6 +16,10 @@ public class CategoryEditForm {
 
     @NotBlank
     private int tier;
+
+    private boolean parent;
+
+    private List<Long> deleteList;
 
     public CategoryEditForm() {
     }

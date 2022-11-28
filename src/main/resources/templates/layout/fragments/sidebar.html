@@ -49,42 +49,31 @@
         <li class="mb-1 superCategory btn fs-5">
             <!--            <a th:href="@{/article/list(category=total,tier=0,page=1)}"-->
             <!--                                                   th:text="|전체글(${category.getCount()})|">토탈</a></li>-->
-            <a href="">전체글(갯수나올예정)</a>
+            <a href="" th:text="|전체글(${totalPostCount})|">전체글(갯수나올예정)</a>
         </li>
-        <a th:href="@{/edit/category}" sec:authorize="hasRole('MANAGER')" class="p-1 btn"><i
+        <a th:href="@{/category/edit}" sec:authorize="hasRole('MANAGER')" class="p-1 btn"><i
                 class="fas fa-pen"></i></a>
 
         <!-- 나중에 반복문으로 카테고리 뿌려줄 예정 -->
-        <!--<li class="mb-1" th:each="superCategory : ${category.getCategoryTCountList()}">
+        <li class="mb-1" th:each="super : ${superCategory}">
             <div class="btn-group">
                 <button class="btn btn-toggle align-items-center rounded collapsed
                                                    me-0 pe-0" data-bs-toggle="collapse"
-                        th:data-bs-target="|#collapse-${superCategory.getId()}-sub|"
+                        th:data-bs-target="|#collapse-${super.id}-sub|"
                         aria-expanded="true">
                 </button>
-                <a th:href="@{/article/list(category=${superCategory.getTitle()},tier=1,page=1)}"
-                   class="ms-0 superCategory btn fs-5"
-                   th:text="|${superCategory.getTitle()}(${superCategory.getCount()})|">슈퍼</a>
+                <a class="ms-0 superCategory btn fs-5"
+                   th:text="|${super.name}(${#lists.size(superCategory)})|">슈퍼</a>
             </div>
-            <div class="collapse show" th:id="|collapse-${superCategory.getId()}-sub|">
+            <div class="collapse show" th:id="|collapse-${super.id}-sub|">
                 <ul class="ms-1 btn-toggle-nav list-unstyled fw-normal pb-1"
-                    th:each="subCategory : ${superCategory.getCategoryTCountList()}">
-                    <li><a th:href="@{/article/list(category=${subCategory.getTitle()},tier=2,page=1)}"
-                           class="link-dark rounded"
-                           th:text="|${subCategory.getTitle()}(${subCategory.getCount()})|">서브</a></li>
+                    th:each="sub : ${subCategory}" th:if="${super.id == sub.parentId}">
+                    <li><a class="link-dark rounded"
+                           th:text="|${sub.name}(${#lists.size(subCategory)})|">서브</a></li>
                 </ul>
             </div>
-        </li>-->
-
-        <li class="mb-1">
-            <div class="btn-group">
-                <button class="btn btn-toggle align-items-center rounded collapsed
-                                       me-0 pe-0" data-bs-toggle="collapse"
-                        aria-expanded="true">
-                </button>
-                <a href="" class="ms-0 superCategory btn fs-5">슈퍼</a>
-            </div>
         </li>
+
 
         <!--    카테고리 e    -->
         <!--   최신 댓글 s    -->

@@ -39,12 +39,18 @@
                             <button class="list-group-item list-group-item-action list-group-item-light fw-bold"
                                     th:text="|${super.name}|"
                                     th:id="|superCategory-${super.id}|"
+                                    th:value="${super.id}"
+                                    th:data-tier="${super.tier}"
+                                    data-parent='true'
                                     onclick="clickCategory(this)"></button>
-                            <th:block
-                                    th:each="sub : ${subCategory}">
+
+                            <th:block th:each="sub : ${subCategory}" th:if="${super.id == sub.parentId}">
                                 <button class="list-group-item-action list-group-item-light list-group-item"
                                         th:text="|${sub.name}|"
                                         th:id="|subCategory-${sub.id}|"
+                                        th:value="${sub.id}"
+                                        th:data-tier="${sub.tier}"
+                                        data-parent='false'
                                         onclick="clickCategory(this)"></button>
                             </th:block>
                         </th:block>
@@ -63,9 +69,10 @@
                                         class="fas fa-angle-down"></i></i></button>
                             </div>
                             <div>
-                                <button class="category-nav-btn " onclick="tierUp()"><i class="fas fa-chevron-left"></i>
+                                <button class="category-nav-btn " onclick="changeParent()"><i
+                                        class="fas fa-chevron-left"></i>
                                 </button>
-                                <button class=" category-nav-btn " onclick="tierDown()"><i
+                                <button class=" category-nav-btn " onclick="changeChild()"><i
                                         class="fas fa-chevron-right"></i></button>
                             </div>
                             <div>
@@ -81,173 +88,11 @@
 
             <div class="container mt-5">
                 <div class="row justify-content-center g-0">
-                    <button class="btn btn-secondary col-3 me-5">적 용</button>
+                    <button class="btn btn-secondary col-3 me-5" onclick="changeCategory()">적 용</button>
                     <button class="btn btn-secondary col-3" onclick="history.back()">취 소</button>
                 </div>
             </div>
             <div style="margin-bottom:  100px"></div>
-
-
-            <script th:inline="javascript">
-
-                // // 재사용할 dto
-                // const categorysList = [[${categoryForEdit}]];
-                // let idxNewCategoryNum = 0;
-                // const categoryName = document.getElementById("categoryName");
-                //
-                // // DIV 셀렉터
-                // let selector;
-                // // DTO 카테고리 셀렉터
-                // let category;
-                //
-                // // 카테고리명 유효성 검사
-                // function checkCategoryName(){
-                //   const categoryList = document.getElementById("categoryBox").childNodes;
-                //   for (let i = 0; i<categoryList.length; i++) {
-                //     const curNode = categoryList[i];
-                //
-                //     if(curNode.textContent === ""||curNode.textContent === " "){
-                //       alert("카테고리 명이 공백이면 안됩니다.");
-                //       return  true;
-                //     }
-                //
-                //     for(let j = i+1; j<categoryList.length; j++){
-                //       if(curNode.textContent === categoryList[j].textContent){
-                //         alert("카테고리 명이 중복되면 안됩니다.");
-                //         return  true;
-                //       }
-                //     }
-                //   }
-                //   return false;
-                // }
-                //
-                // function clickCategory(div) {
-                //
-                //   if(checkCategoryName()){
-                //     return;
-                //   }
-                //
-                //   selector = div;
-                //   categoryName.value = selector.innerText;
-                //   category = categorysList.find(x => x.title === selector.innerText);
-                //   const childNodes = selector.parentNode.childNodes;
-                //
-                //   for (const childNode of childNodes) {
-                //     childNode.classList.remove("active");
-                //   }
-                //
-                //   selector.classList.add("active");
-                //
-                // }
-                //
-                // categoryName.addEventListener("keyup", () => {
-                //   selector.innerText = categoryName.value;
-                //   category.title = selector.innerText;
-                // })
-                //
-                // function swapToPrevious(title){
-                //
-                //   const index = categorysList.findIndex(x=>x.title === title);
-                //
-                //   let tmp = categorysList[index-1];
-                //   categorysList[index-1] = categorysList[index];
-                //   categorysList[index] = tmp;
-                // }
-                //
-                // function swapToNextInDto(title){
-                //
-                //   const index = categorysList.findIndex(x=>x.title === title);
-                //
-                //   let tmp = categorysList[index+1];
-                //   categorysList[index+1] = categorysList[index];
-                //   categorysList[index] = tmp;
-                // }
-                //
-                // function categoryUp() {
-                //
-                //   const categoryTitle = selector.innerText;
-                //
-                //   // 선택 카테고리가 부모일때
-                //   if (selector.previousSibling != null) {
-                //
-                //     swapToPrevious(categoryTitle);
-                //     selector.parentNode.insertBefore(selector, selector.previousSibling);
-                //
-                //   }
-                // }
-                //
-                // function categoryDown() {
-                //
-                //   const categoryTitle = selector.innerText;
-                //
-                //   // 선택 카테고리가 부모일때
-                //   if (selector.nextSibling.nextSibling != null) {
-                //
-                //     swapToNextInDto(categoryTitle);
-                //     selector.parentNode.insertBefore(selector, selector.nextSibling.nextSibling);
-                //   }
-                //   else if(selector.nextSibling.nextSibling == null) {
-                //     swapToNextInDto(categoryTitle);
-                //     selector.parentNode.appendChild(selector);
-                //   }
-                // }
-                //
-                // function tierUp(){
-                //   category.tier = 1;
-                //   selector.classList.add("fw-bold");
-                //
-                // }
-                //
-                // function tierDown(){
-                //   category.tier = 2;
-                //   selector.classList.remove("fw-bold");
-                // }
-                //
-                // function addCategory(){
-                //   const box = document.getElementById("categoryBox");
-                //   box.innerHTML +=`<button class="list-group-item-action list-group-item-light list-group-item" onclick="clickCategory(this)">새 카테고리${idxNewCategoryNum}</button>`
-                //
-                //   let newCategory = {};
-                //   newCategory.id = null;
-                //   newCategory.title = '새 카테고리'+idxNewCategoryNum++;
-                //   newCategory.tier = 2;
-                //   newCategory.count = 0;
-                //   newCategory.porder = 0;
-                //   newCategory.corder = 0;
-                //
-                //   categorysList.push(newCategory);
-                // }
-                //
-                // function deleteCategory(){
-                //   const categoryIndex = categorysList.findIndex(x=>x.title === selector.innerText);
-                //   categorysList.splice(categoryIndex,1);
-                //   selector.remove();
-                // }
-                //
-                // function changeCategory(){
-                //   if(checkCategoryName()){
-                //     return;
-                //   }
-                //
-                //   let token = getCsrfToken();
-                //   const xhr = new XMLHttpRequest();
-                //   xhr.open("POST", "/category/edit");
-                //   xhr.setRequestHeader("content-type", "application/json");
-                //   xhr.setRequestHeader("X-XSRF-TOKEN", token);
-                //   xhr.send(JSON.stringify(categorysList));
-                //
-                //   xhr.onload = () => {
-                //     if (xhr.status === 200 || xhr.status === 201 || xhr.status === 202) {
-                //       location.href='/';
-                //     }
-                //     else{
-                //       alert(xhr.response);
-                //     }
-                //   }
-                // }
-
-            </script>
-
         </section>
 
         <footer class="footer bg-light mt-5">
@@ -258,4 +103,184 @@
     </div>
 </section>
 </body>
+<script th:inline="javascript">
+
+    const deleteList = [];
+
+    // 카테고리명 유효성 검사
+    function checkCategoryName() {
+        const categoryList = document.querySelectorAll('.list-group-item');
+        for (const category of categoryList) {
+            if (!category.innerText.replace(/\s/g, '')) {
+                alert('카테고리명이 공백 일수 없습니다.');
+                return true;
+            }
+        }
+
+        for (let i = 0; i < categoryList.length; i++) {
+            for (let j = 0; j < categoryList.length; j++) {
+                if (categoryList[i].innerText === categoryList[j].innerText && i !== j) {
+                    alert('카테고리명이 중복 일수 없습니다.');
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    function clickCategory(button) {
+
+        if (checkCategoryName()) {
+            return;
+        }
+
+        const categoryName = document.getElementById('categoryName')
+        categoryName.value = button.innerText;
+
+        const categoryList = document.querySelectorAll('.list-group-item');
+        categoryList.forEach(category => {
+            category.classList.remove('active');
+        });
+        button.classList.add('active')
+
+    }
+
+    document.getElementById('categoryName').addEventListener("keyup", function () {
+        const selectButton = document.querySelector('.active');
+        if (selectButton) {
+            selectButton.innerText = this.value;
+        }
+
+    })
+
+    const changeParent = function () {
+        const selectButton = document.querySelector('.active');
+        selectButton.classList.add("fw-bold");
+        selectButton.dataset.parent = 'true';
+    }
+
+    const changeChild = function () {
+        const selectButton = document.querySelector('.active');
+        selectButton.classList.remove("fw-bold");
+        selectButton.dataset.parent = 'false';
+    }
+
+    function addCategory() {
+        const box = document.getElementById("categoryBox");
+        const tier = box.lastElementChild?.dataset.tier ? Number(box.lastElementChild.dataset.tier) + 1 : 0;
+        box.innerHTML += `<button class="list-group-item-action list-group-item-light list-group-item" data-tier="${String(tier)}" data-parent="false" onclick="clickCategory(this)">새 카테고리${tier}</button>`
+    }
+
+    function deleteCategory() {
+        const active = document.querySelector('.active');
+        if (active) {
+
+            if (active.value) {
+                deleteList.push(Number(active.value));
+            }
+
+            active.remove();
+        } else {
+            alert('삭제하실 카테고리를 선택해 주세요.');
+        }
+    }
+
+    function categoryUp() {
+
+        const selectButton = document.querySelector('.active');
+
+        if (selectButton) {
+            if (selectButton.dataset.parent === 'true') {
+
+                if (selectButton.previousElementSibling) {
+
+                    let tier = selectButton.previousElementSibling.dataset.tier;
+                    selectButton.previousElementSibling.dataset.tier = selectButton.dataset.tier;
+                    selectButton.dataset.tier = tier;
+
+                    selectButton.previousElementSibling.before(selectButton);
+                }
+            } else {
+
+                if (selectButton.previousElementSibling.previousElementSibling) {
+
+                    let tier = selectButton.previousElementSibling.dataset.tier;
+                    selectButton.previousElementSibling.dataset.tier = selectButton.dataset.tier;
+                    selectButton.dataset.tier = tier;
+
+                    selectButton.previousElementSibling.before(selectButton);
+                } else {
+                    alert('자식 카테고리는 최상단에 위치할 수 없습니다.');
+                }
+            }
+        } else {
+            alert('순서를 변경하실 카테고리를 선택해 주세요.');
+        }
+    }
+
+    function categoryDown() {
+
+        const selectButton = document.querySelector('.active');
+
+        if (selectButton) {
+            if (selectButton.nextElementSibling) {
+
+                let tier = selectButton.nextElementSibling.dataset.tier;
+                selectButton.nextElementSibling.dataset.tier = selectButton.dataset.tier;
+                selectButton.dataset.tier = tier;
+
+                selectButton.nextElementSibling.after(selectButton);
+            }
+        } else {
+            alert('순서를 변경하실 카테고리를 선택해 주세요.');
+        }
+    }
+
+    const changeCategory = () => {
+
+        if (checkCategoryName()) {
+            return;
+        }
+
+        const jsonArray = [];
+
+        const categoryList = document.querySelectorAll('.list-group-item');
+        if (!categoryList.length) {
+            alert('카테고리는 최소 한 개 이상 존재해야 합니다.');
+            return;
+        } else if (categoryList[0].dataset.parent === 'false') {
+            alert('자식 카테고리는 최상단에 위치할 수 없습니다.');
+            return;
+        }
+
+        categoryList.forEach(category => {
+            const categoryData = {};
+            categoryData.id = category.value;
+            categoryData.name = category.innerText;
+            categoryData.tier = category.dataset.tier;
+            categoryData.parent = category.dataset.parent;
+            categoryData.deleteList = deleteList;
+
+            jsonArray.push(categoryData);
+        });
+
+        $.ajax({
+            url: "/category/edit",
+            type: 'post',
+            traditional: true,
+            data: JSON.stringify(jsonArray),
+            contentType: 'application/json',
+            dataType: "text",
+            success: function () {
+                location.href = '/';
+            },
+            error: function (e) {
+                alert(e);
+            }
+        });
+    };
+
+
+</script>
 </html>
