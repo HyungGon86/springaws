@@ -9,7 +9,7 @@ import java.util.List;
 @Data
 public class PostForm {
 
-    private String category;
+    private Long category;
 
     @NotBlank
     private String title;

@@ -47,9 +47,8 @@
         <!--   카테고리 s   -->
         <li class="border-top my-3"></li>
         <li class="mb-1 superCategory btn fs-5">
-            <!--            <a th:href="@{/article/list(category=total,tier=0,page=1)}"-->
-            <!--                                                   th:text="|전체글(${category.getCount()})|">토탈</a></li>-->
-            <a href="" th:text="|전체글(${totalPostCount})|">전체글(갯수나올예정)</a>
+
+            <a th:href="@{/post/list(category='total',page=0)}" th:text="|전체글(${totalPostCount})|">전체글(갯수나올예정)</a>
         </li>
         <a th:href="@{/category/edit}" sec:authorize="hasRole('MANAGER')" class="p-1 btn"><i
                 class="fas fa-pen"></i></a>
@@ -63,13 +62,14 @@
                         aria-expanded="true">
                 </button>
                 <a class="ms-0 superCategory btn fs-5"
-                   th:text="|${super.name}(${#lists.size(superCategory)})|">슈퍼</a>
+                   th:text="|${super.name}(${super.count})|">슈퍼</a>
             </div>
             <div class="collapse show" th:id="|collapse-${super.id}-sub|">
                 <ul class="ms-1 btn-toggle-nav list-unstyled fw-normal pb-1"
                     th:each="sub : ${subCategory}" th:if="${super.id == sub.parentId}">
-                    <li><a class="link-dark rounded"
-                           th:text="|${sub.name}(${#lists.size(subCategory)})|">서브</a></li>
+                    <li><a th:href="@{/post/list(category=${sub.name},page=0)}"
+                            class="link-dark rounded"
+                           th:text="|${sub.name}(${sub.count})|">서브</a></li>
                 </ul>
             </div>
         </li>

@@ -17,7 +17,21 @@ public class CategoryService {
     private final CategoryRepository categoryRepository;
 
     public List<CategoryEditForm> superCategory() {
-        return categoryRepository.superCategory();
+        List<CategoryEditForm> superCategory = categoryRepository.superCategory();
+        List<CategoryEditForm> subCategory = categoryRepository.subCategory();
+
+        for (CategoryEditForm suCategory : superCategory) {
+            Long count = 0L;
+
+            for (CategoryEditForm sub : subCategory) {
+                if (suCategory.getId().equals(sub.getParentId())) {
+                    count += sub.getCount();
+                }
+            }
+            suCategory.setCount(count);
+        }
+
+        return superCategory;
     }
 
     public List<CategoryEditForm> subCategory() {
@@ -37,7 +51,6 @@ public class CategoryService {
         for (CategoryEditForm form : categoryEditFormList) {
 
             if (form.getId() == null) {
-
                 Category category = Category.builder()
                         .name(form.getName())
                         .tier(form.getTier())
@@ -50,9 +63,7 @@ public class CategoryService {
                 }
 
                 categoryRepository.save(category);
-
             } else {
-
                 Category category = categoryRepository.findById(form.getId()).orElseThrow(() -> new IllegalStateException("카테고리를 찾을 수 없습니다."));
 
                 category.changeName(form.getName());
@@ -64,7 +75,6 @@ public class CategoryService {
                 } else {
                     category.setParent(parent);
                 }
-
             }
         }
 

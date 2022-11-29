@@ -13,15 +13,17 @@ window.onload = function () {
 
         let span = document.createElement('span');
         let button = document.createElement('button');
+        let i = document.createElement('i');
         let li = document.createElement('li');
         li.setAttribute('class', 'fileList')
         li.setAttribute('data-id', file.fileId);
         button.setAttribute('value', file.fileId);
         button.setAttribute('class', 'fileDeleteBtn');
+        i.setAttribute('class', 'fa-regular fa-square-minus delete');
         button.setAttribute('type', 'button');
-        button.innerText = '삭제';
         span.innerText = file.originalName;
 
+        button.appendChild(i);
         li.append(span, button);
         document.getElementById('fileUl').append(li);
     }
@@ -159,18 +161,26 @@ window.onload = function () {
     document.getElementById('registerBtn').addEventListener('click', () => {
 
         const image = document.querySelectorAll(".note-editable img"); // 게시물에 찐막으로 남아잇는 이미지태그
+        const category = document.getElementById('category');
+        const title = document.getElementById('title');
 
         const content = document.querySelector(".note-editable");
         let str = '';
 
-        console.log('이너텍스트 =' + content.innerText);
         for (const child of content.children) {
             str += child.innerText.replace(/\s/g, '');
 
         }
         if (!str && !image.length) {
             alert('내용을 입력해주세요');
-            content.focus();
+            return;
+        } else if (category.value === '0') {
+            alert('카테고리를 선택해주세요.');
+            category.focus();
+            return;
+        } else if (!title.value) {
+            alert('제목을 입력해주세요.');
+            title.focus();
             return;
         }
 

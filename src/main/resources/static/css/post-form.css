@@ -1,0 +1,29 @@
+.fileDeleteBtn {
+    border-style: none;
+    background: white;
+    color: red;
+}
+
+#attachDiv {
+    border: 1px solid lightgrey;
+    padding: 20px 20px 20px 20px;
+    border-radius: 5px;
+    overflow: auto;
+}
+
+#fileUl {
+    list-style: none;
+    padding-left: 0;
+}
+
+.fileList {
+    float: left;
+    margin-right: 1rem;
+}
+
+.writeWrap {
+    border: 1px solid black;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgb(38 38 38 / 20%);
+    background: white;
+}

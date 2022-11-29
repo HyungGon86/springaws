@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import study.springaws.domain.category.service.CategoryService;
 import study.springaws.domain.post.service.PostService;
 
+import java.util.List;
+
 @Controller
 @Slf4j
 @RequiredArgsConstructor

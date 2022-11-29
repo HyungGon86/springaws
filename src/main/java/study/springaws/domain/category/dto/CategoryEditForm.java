@@ -17,6 +17,8 @@ public class CategoryEditForm {
     @NotBlank
     private int tier;
 
+    private Long count;
+
     private boolean parent;
 
     private List<Long> deleteList;
@@ -29,5 +31,13 @@ public class CategoryEditForm {
         this.parentId = parentId;
         this.name = name;
         this.tier = tier;
+    }
+
+    public CategoryEditForm(Long id, Long parentId, String name, int tier, Long count) {
+        this.id = id;
+        this.parentId = parentId;
+        this.name = name;
+        this.tier = tier;
+        this.count = count;
     }
 }

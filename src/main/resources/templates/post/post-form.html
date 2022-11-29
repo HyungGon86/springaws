@@ -1,37 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="layout/fragments/header :: header">
-    <meta charset="UTF-8">
+<head>
+    <th:block th:replace="layout/fragments/header :: header">
+        <meta charset="UTF-8">
+    </th:block>
+    <script th:src="@{/js/summernote/summernote-lite.js}"></script>
+    <script th:src="@{/js/summernote/lang/summernote-ko-KR.js}"></script>
+    <script th:src="@{/js/postwrite.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/summernote/summernote-lite.css}">
+    <link rel="stylesheet" th:href="@{/css/post-form.css}">
     <title>Gon's Blog</title>
 </head>
-<script th:src="@{/js/summernote/summernote-lite.js}"></script>
-<script th:src="@{/js/summernote/lang/summernote-ko-KR.js}"></script>
-<script th:src="@{/js/postwrite.js}"></script>
-<link rel="stylesheet" th:href="@{/css/summernote/summernote-lite.css}">
-<style>
-    #attachDiv {
-        border: 1px solid lightgrey;
-        padding: 20px 20px 20px 20px;
-        border-radius: 5px;
-    }
-
-    #fileUl {
-        list-style: none;
-        padding-left: 0;
-    }
-
-    .fileList {
-        float: left;
-        margin-right: 1rem;
-    }
-
-    .writeWrap {
-        border: 1px solid black;
-        border-radius: 5px;
-        box-shadow: 0 4px 8px rgb(38 38 38 / 20%);
-        background: white;
-    }
-</style>
 <body>
 
 <section class="row g-0 row-cols-xxl-2 g-xxl-0 p-0 ">
@@ -42,6 +21,7 @@
             <div th:replace="layout/fragments/sidebar.html :: sideBar"></div>
         </div>
     </div>
+
     <div class="bg-light col-xxl-2 d-none d-xxl-block p-0">
     </div>
 
@@ -53,19 +33,49 @@
 
             <div style="margin-bottom: 100px"></div>
 
-            <div id="container">
+            <div class="container">
 
                 <div class="row p-5 writeWrap">
                     <form th:action th:object="${postForm}" id="postForm" enctype="multipart/form-data" method="post">
-                        <div class="col">
-                            <label>카테고리</label>
-                            <select class="form-select">
-                                <option>탭</option>
+                        <div class="d-flex flex-row-reverse">
+
+                            <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
+                                    data-bs-target="#thumbnailModal">
+                                썸네일 등록
+                            </button>
+
+                            <div class="modal fade" id="thumbnailModal" tabindex="-1"
+                                 aria-labelledby="thumbnailModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="thumbnailModalLabel">썸네일 등록</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-footer">
+
+                                            <input type="text" id="thumbnail-url-upload-input" class="form-control">
+                                            <button class="btn btn-secondary" id="thumbnail-url-upload-btn">URL 업로드
+                                            </button>
+                                            <label class="btn btn-secondary" for="thumbnail">파일 업로드</label>
+                                            <input type="file" id="thumbnail" name="thumbnail" accept="image/*"
+                                                   class="d-none">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-3 mb-3">
+                            <select id="category" name="category" class="form-select ps-3" aria-label="Select category">
+                                <option value="0" selected>카테고리를 선택해주세요</option>
+                                <option th:each="sub : ${subCategory}"  th:value="${sub.id}" th:text="${sub.name}">Java</option>
                             </select>
                         </div>
+
                         <div class="col mt-3">
-                            <label th:for="title">제목</label>
-                            <input type="text" class="form-control" th:field="*{title}" placeholder="제목을 입력하세요."/>
+                            <input type="text" class="form-control" th:field="*{title}" placeholder="제목을 입력해주세요."/>
                         </div>
 
                         <div class="col mt-3">
@@ -75,18 +85,18 @@
                     </form>
 
                     <div class="col-12 mt-3">
-                        <div id="attachDiv">
+                        <div id="attachDiv" class="col">
                             <button type="button" id="attachBtn" class="btn btn-secondary">파일첨부</button>
 
-                            <ul id="fileUl"></ul>
+                            <div class="mt-3">
+                                <ul id="fileUl"></ul>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="col mt-3">
-                        <div style="float: right">
-                            <button type="button" class="btn btn-dark" id="cancelBtn">취소</button>
-                            <button type="button" class="btn btn-primary" id="registerBtn">등록</button>
-                        </div>
+                    <div class="row justify-content-evenly mt-4 mb-5 g-0">
+                        <button class="btn btn-secondary col-4" id="registerBtn">등 록</button>
+                        <button class="btn btn-secondary col-4" onclick="history.back()">취 소</button>
                     </div>
                 </div>
 
