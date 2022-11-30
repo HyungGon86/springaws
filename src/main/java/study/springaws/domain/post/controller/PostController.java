@@ -15,6 +15,7 @@ import study.springaws.domain.category.service.CategoryService;
 import study.springaws.domain.post.domain.Post;
 import study.springaws.domain.post.dto.PostForm;
 import study.springaws.domain.post.dto.PostListDto;
+import study.springaws.domain.post.dto.PostViewDto;
 import study.springaws.domain.post.service.PostService;
 import study.springaws.global.oauth.PrincipalDetails;
 
@@ -41,17 +42,12 @@ public class PostController {
                         @AuthenticationPrincipal PrincipalDetails principalDetails) {
 
         System.out.println("errors = " + errors);
-        System.out.println("postForm = " + postForm);
-        System.out.println("principalDetails = " + principalDetails.getUserId());
 
         if (errors.hasErrors()) {
             return "post/post-form";
         }
 
-        for (int i = 0; i < 50; i++) {
-            postService.postSave(postForm, principalDetails.getUserId());
-        }
-//        postService.postSave(postForm, principalDetails.getUserId());
+        postService.postSave(postForm, principalDetails.getUserId());
 
         return "redirect:/";
     }
@@ -61,18 +57,36 @@ public class PostController {
                                      @PageableDefault(size = 5) Pageable pageable,
                                      Model model) {
 
-        System.out.println("pageable = " + pageable);
         Page<PostListDto> postListDto = postService.postListByCategory(category, pageable);
-
-        System.out.println("postListDto.getContent() = " + postListDto.getContent());
+        int totalPages = postListDto.getTotalPages() - 1;
 
         int start = (int) (Math.floor(postListDto.getNumber() / postListDto.getSize()) * postListDto.getSize());
-        int end = Math.min(postListDto.getTotalPages(), postListDto.getSize() + start - 1);
+        int end = Math.min(totalPages == -1 ? 0 : totalPages, postListDto.getSize() + start - 1);
 
         model.addAttribute("postList", postListDto);
         model.addAttribute("start", start);
         model.addAttribute("end", end);
 
+        model.addAttribute("totalPostCount", postService.totalPostCount());
+        model.addAttribute("superCategory", categoryService.superCategory());
+        model.addAttribute("subCategory", categoryService.subCategory());
+
         return "post/postList";
+    }
+
+    @GetMapping("/view")
+    public String postView(@RequestParam Long postId,
+                           @AuthenticationPrincipal PrincipalDetails principalDetails,
+                           Model model) {
+
+
+        model.addAttribute("post", postService.postViewDto(postId, principalDetails.getUserId()));
+        model.addAttribute("picUrl", principalDetails.getUserPicUrl());
+
+        model.addAttribute("totalPostCount", postService.totalPostCount());
+        model.addAttribute("superCategory", categoryService.superCategory());
+        model.addAttribute("subCategory", categoryService.subCategory());
+
+        return "post/postView";
     }
 }

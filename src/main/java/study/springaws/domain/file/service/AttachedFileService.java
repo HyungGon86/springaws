@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import study.springaws.domain.file.domain.AttachedFile;
+import study.springaws.domain.file.dto.ThumbnailFileDto;
 import study.springaws.domain.file.dto.UploadFileDto;
 import study.springaws.domain.file.repository.AttachedFileRepository;
 import study.springaws.domain.post.domain.Post;
@@ -23,7 +24,11 @@ public class AttachedFileService {
     @Value("${file.dir}")
     private String fileDir;
 
-    private UploadFileDto fileSave(MultipartFile multipartFile) {
+    @Value("${file.thumbnailDir}")
+    private String fileThumbnailDir;
+
+    @Transactional
+    public UploadFileDto fileSave(MultipartFile multipartFile) {
 
         AttachedFile file = AttachedFile.builder()
                 .multipartFile(multipartFile)
@@ -35,10 +40,17 @@ public class AttachedFileService {
         return new UploadFileDto(file.getId(), file.getOriginalName(), file.getSystemName());
     }
 
-    private void deleteFilesToDisk(List<Long> fileId) {
-        List<AttachedFile> fileList = attachedFileRepository.findAllByIdInOrPostIsNull(fileId);
+    @Transactional
+    public ThumbnailFileDto thumbnailFileDto(MultipartFile multipartFile) {
 
-        fileList.forEach(AttachedFile::fileDelete);
+        AttachedFile file = AttachedFile.builder()
+                .multipartFile(multipartFile)
+                .fileDir(fileThumbnailDir)
+                .build();
+
+        attachedFileRepository.save(file);
+
+        return new ThumbnailFileDto(file.getId(), file.getOriginalName(), file.getSystemName());
     }
 
     @Transactional
@@ -58,6 +70,12 @@ public class AttachedFileService {
         attachedFileRepository.bulkFileUpdate(post, filesId);
     }
 
+    private void deleteFilesToDisk(List<Long> fileId) {
+        List<AttachedFile> fileList = attachedFileRepository.findAllByIdInOrPostIsNull(fileId);
+
+        fileList.forEach(AttachedFile::fileDelete);
+    }
+
     @Transactional
     public void deleteFile(List<Long> fileId) {
 
@@ -65,8 +83,6 @@ public class AttachedFileService {
 
         attachedFileRepository.bulkFileDeleteByIdOrPostIsNull(fileId);
     }
-
-
 
 
 }

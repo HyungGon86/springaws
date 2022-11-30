@@ -39,4 +39,5 @@ logging:
 #    org.hibernate.type: trace
 
 file:
-  dir: C:/springAws/
+  dir: C:/springAws/attachedFiles/
+  thumbnailDir : C:/springAws/thumbnail/

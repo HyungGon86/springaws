@@ -39,7 +39,9 @@
                                 <div class="row g-0">
                                     <div class="col-3">
                                         <div class="ratio ratio-1x1"
-                                             th:style="|background-image: url(${post.thumbnailUrl}); background-position: center; background-size: cover;|"></div>
+                                             th:style="|background-position: center; background-size: cover;|">
+                                            <img th:src="${post.thumbnailUrl}" th:if="${post.thumbnailUrl != null and post.thumbnailUrl != ''}">
+                                        </div>
                                     </div>
                                     <div class="col-9 row row-cols-1 align-self-center">
                                         <h3 class="card-title col mb-3 text-truncate" th:text="${post.title}">글

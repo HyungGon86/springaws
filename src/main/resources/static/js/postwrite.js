@@ -20,6 +20,7 @@ window.onload = function () {
         button.setAttribute('value', file.fileId);
         button.setAttribute('class', 'fileDeleteBtn');
         i.setAttribute('class', 'fa-regular fa-square-minus delete');
+        i.style.pointerEvents = 'none';
         button.setAttribute('type', 'button');
         span.innerText = file.originalName;
 
@@ -92,7 +93,7 @@ window.onload = function () {
                         createFileList(file);
                         $(editor).summernote('insertImage', file.filePath);
                     } else {
-                        alert('이미지를 제외한 파일은 파일 첨부 버튼을 이용해 주세요.');
+                        alert('이미지 파일만 삽입 가능합니다.');
                     }
                 }
             }
@@ -100,9 +101,9 @@ window.onload = function () {
     }
 
     // 파일 첨부버튼 클릭시 인풋파일 클릭 이벤트 실행
-    document.getElementById('attachBtn').addEventListener('click', () => {
-        document.getElementById('attachFiles').click();
-    });
+    // document.getElementById('attachBtn').addEventListener('click', () => {
+    //     document.getElementById('attachFiles').click();
+    // });
 
     document.getElementById('attachFiles').addEventListener('change', function (e) {
         let files = e.target.files;
@@ -139,21 +140,27 @@ window.onload = function () {
             let fileInput = document.getElementById(e.target.value);
             fileInput.setAttribute('name', 'fileDeleteList');
 
-            const image = document.querySelectorAll(".note-editable img");
+            if (document.getElementById('thumbnailUrl').value) {
 
-            const pathDot = fileInput.dataset.path.lastIndexOf('\\');
-            const fileName = fileInput.dataset.path.substring(pathDot + 1);
+                document.getElementById('thumbBox').style.display = 'none';
+                document.getElementById('thumbnailUrl').value = '';
 
-            image.forEach(img => {
+            } else {
+                const image = document.querySelectorAll(".note-editable img");
 
-                const imgDot = img.src.lastIndexOf('/');
-                const imgName = img.src.substring(imgDot + 1);
+                const pathDot = fileInput.dataset.path.lastIndexOf('\\');
+                const fileName = fileInput.dataset.path.substring(pathDot + 1);
 
-                if (fileName === imgName) {
-                    img.remove();
-                }
-            });
+                image.forEach(img => {
 
+                    const imgDot = img.src.lastIndexOf('/');
+                    const imgName = img.src.substring(imgDot + 1);
+
+                    if (fileName === imgName) {
+                        img.remove();
+                    }
+                });
+            }
 
         }
     });
@@ -186,6 +193,38 @@ window.onload = function () {
 
         document.getElementById('postForm').submit();
     });
+
+    document.getElementById('thumbnail').addEventListener("change", e => {
+        uploadImg(e.target);
+    })
+
+    const uploadImg = function (input) {
+
+        if(input.files && input.files[0]) {
+
+            let formData = new FormData();
+            formData.append('thumbnailFile', input.files[0]);
+
+            $.ajax({
+                data: formData,
+                type: "POST",
+                url: "/files/thumbnail",
+                contentType: false,
+                processData: false,
+                success: function (data) {
+
+                    console.log(data.filePath);
+
+                    document.getElementById('thumbnailUrl').value = String(data.filePath);
+                    document.getElementById('thumbnailPreView').src = data.filePath;
+                    document.getElementById('thumbBox').style.display = '';
+
+                    createFileList(data);
+                }
+            });
+
+        }
+    }
 
 
 };

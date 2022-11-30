@@ -27,6 +27,8 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 
         OAuth2User oAuth2User = super.loadUser(userRequest); // 프로바이더에서 제공받은 유저정보
 
+        System.out.println("oAuth2User = " + oAuth2User);
+
         // 회원가입 강제로 진행
         Oauth2UserInfo oauth2UserInfo = null;
         if (userRequest.getClientRegistration().getRegistrationId().equals("google")) {
@@ -49,6 +51,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
                     .nickname(oauth2UserInfo.getName())
                     .provider(oauth2UserInfo.getProvider())
                     .providerId(oauth2UserInfo.getProviderId())
+                    .imgUrl(oauth2UserInfo.getPicUrl())
                     .build();
 
             userRepository.save(userEntity);

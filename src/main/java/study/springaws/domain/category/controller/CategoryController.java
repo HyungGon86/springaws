@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import study.springaws.domain.category.dto.CategoryEditForm;
 import study.springaws.domain.category.service.CategoryService;
+import study.springaws.domain.post.service.PostService;
 
 import java.util.List;
 
@@ -17,12 +18,14 @@ import java.util.List;
 public class CategoryController {
 
     private final CategoryService categoryService;
+    private final PostService postService;
 
     @GetMapping("/edit")
     public String editCategory(Model model) {
 
         model.addAttribute("superCategory", categoryService.superCategory());
         model.addAttribute("subCategory", categoryService.subCategory());
+        model.addAttribute("totalPostCount", postService.totalPostCount());
 
         return "category/edit-category";
     }

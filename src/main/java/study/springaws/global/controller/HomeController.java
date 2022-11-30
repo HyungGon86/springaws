@@ -29,8 +29,12 @@ public class HomeController {
     }
 
     @GetMapping("/login")
-    public String loginForm() {
+    public String loginForm(Model model) {
         log.info("로그인 페이지 이동");
+
+        model.addAttribute("totalPostCount", postService.totalPostCount());
+        model.addAttribute("superCategory", categoryService.superCategory());
+        model.addAttribute("subCategory", categoryService.subCategory());
         return "login/loginForm";
     }
 

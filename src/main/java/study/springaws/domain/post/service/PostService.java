@@ -15,12 +15,14 @@ import study.springaws.domain.file.service.AttachedFileService;
 import study.springaws.domain.post.domain.Post;
 import study.springaws.domain.post.dto.PostForm;
 import study.springaws.domain.post.dto.PostListDto;
+import study.springaws.domain.post.dto.PostViewDto;
 import study.springaws.domain.post.repository.PostRepository;
 import study.springaws.domain.user.domain.User;
 import study.springaws.domain.user.repository.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -62,11 +64,26 @@ public class PostService {
 
     public Page<PostListDto> postListByCategory(String name, Pageable pageable) {
         Category category = categoryRepository.findByName(name);
+        if (category == null) {
+            return postRepository.postListByCategory(null, pageable);
+        }
 
-        return postRepository.postListByCategory(category, pageable);
+        if (category.getParent() != null) {
+            return postRepository.postListByCategory(category, pageable);
+        } else {
+            List<Category> categoryList = categoryRepository.findByParent(category);
+            return postRepository.postListBySuperCategory(categoryList, pageable);
+        }
     }
 
+    @Transactional
+    public PostViewDto postViewDto(Long postId, Long userId) {
 
+        Post post = postRepository.findById(postId).orElseThrow(() -> new IllegalStateException("존재하지 않는 글에 대한 요청입니다."));
+        post.increaseHits();
+
+        return new PostViewDto(post, userId);
+    }
 
 
 }

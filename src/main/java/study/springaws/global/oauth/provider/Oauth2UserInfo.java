@@ -9,4 +9,6 @@ public interface Oauth2UserInfo {
     String getEmail();
 
     String getName();
+
+    String getPicUrl();
 }

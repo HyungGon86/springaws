@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import study.springaws.domain.file.dto.ThumbnailFileDto;
 import study.springaws.domain.file.dto.UploadFileDto;
 import study.springaws.domain.file.service.AttachedFileService;
 
@@ -22,5 +23,8 @@ public class AttachedFileApiController {
         return fileService.fileSaveList(attachFiles);
     }
 
-
+    @PostMapping("/thumbnail")
+    public ThumbnailFileDto saveThumbnail(@RequestParam MultipartFile thumbnailFile){
+        return fileService.thumbnailFileDto(thumbnailFile);
+    }
 }

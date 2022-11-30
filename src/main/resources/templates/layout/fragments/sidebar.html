@@ -61,7 +61,8 @@
                         th:data-bs-target="|#collapse-${super.id}-sub|"
                         aria-expanded="true">
                 </button>
-                <a class="ms-0 superCategory btn fs-5"
+                <a th:href="@{/post/list(category=${super.name},page=0)}"
+                   class="ms-0 superCategory btn fs-5"
                    th:text="|${super.name}(${super.count})|">슈퍼</a>
             </div>
             <div class="collapse show" th:id="|collapse-${super.id}-sub|">

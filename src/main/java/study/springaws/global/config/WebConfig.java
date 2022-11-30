@@ -10,6 +10,9 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/summernoteImage/**")
-                .addResourceLocations("file:///C:/springAws/");
+                .addResourceLocations("file:///C:/springAws/attachedFiles/");
+
+        registry.addResourceHandler("/thumbnail/**")
+                .addResourceLocations("file:///C:/springAws/thumbnail/");
     }
 }
