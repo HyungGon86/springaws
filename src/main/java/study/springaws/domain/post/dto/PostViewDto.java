@@ -17,8 +17,7 @@ public class PostViewDto {
     private String category;
     private LocalDateTime createdDate;
 
-    public PostViewDto(Post post, Long userId) {
-        this.userId = userId;
+    public PostViewDto(Post post) {
         this.postId = post.getId();
         this.title = post.getTitle();
         this.content = post.getContent();

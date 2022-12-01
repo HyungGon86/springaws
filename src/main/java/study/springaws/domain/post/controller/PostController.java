@@ -26,14 +26,10 @@ import study.springaws.global.oauth.PrincipalDetails;
 public class PostController {
 
     private final PostService postService;
-    private final CategoryService categoryService;
 
     @GetMapping("/write")
     public String postWrite(Model model) {
         model.addAttribute("postForm", new PostForm());
-        model.addAttribute("totalPostCount", postService.totalPostCount());
-        model.addAttribute("superCategory", categoryService.superCategory());
-        model.addAttribute("subCategory", categoryService.subCategory());
         return "post/post-form";
     }
 
@@ -48,7 +44,6 @@ public class PostController {
         }
 
         postService.postSave(postForm, principalDetails.getUserId());
-
         return "redirect:/";
     }
 
@@ -66,11 +61,6 @@ public class PostController {
         model.addAttribute("postList", postListDto);
         model.addAttribute("start", start);
         model.addAttribute("end", end);
-
-        model.addAttribute("totalPostCount", postService.totalPostCount());
-        model.addAttribute("superCategory", categoryService.superCategory());
-        model.addAttribute("subCategory", categoryService.subCategory());
-
         return "post/postList";
     }
 
@@ -79,14 +69,14 @@ public class PostController {
                            @AuthenticationPrincipal PrincipalDetails principalDetails,
                            Model model) {
 
+        PostViewDto postViewDto = postService.postViewDto(postId);
 
-        model.addAttribute("post", postService.postViewDto(postId, principalDetails.getUserId()));
-        model.addAttribute("picUrl", principalDetails.getUserPicUrl());
+        if (principalDetails != null) {
+            postViewDto.setUserId(principalDetails.getUserId());
+            model.addAttribute("picUrl", principalDetails.getUserPicUrl());
+        }
 
-        model.addAttribute("totalPostCount", postService.totalPostCount());
-        model.addAttribute("superCategory", categoryService.superCategory());
-        model.addAttribute("subCategory", categoryService.subCategory());
-
+        model.addAttribute("post", postViewDto);
         return "post/postView";
     }
 }

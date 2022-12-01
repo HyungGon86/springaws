@@ -77,12 +77,12 @@ public class PostService {
     }
 
     @Transactional
-    public PostViewDto postViewDto(Long postId, Long userId) {
+    public PostViewDto postViewDto(Long postId) {
 
-        Post post = postRepository.findById(postId).orElseThrow(() -> new IllegalStateException("존재하지 않는 글에 대한 요청입니다."));
+        Post post = postRepository.findById(postId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 글에 대한 요청입니다."));
         post.increaseHits();
 
-        return new PostViewDto(post, userId);
+        return new PostViewDto(post);
     }
 
 

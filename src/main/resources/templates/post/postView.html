@@ -5,6 +5,7 @@
         <meta charset="UTF-8">
     </th:block>
     <link rel="stylesheet" th:href="@{/css/postView.css}">
+    <script th:src="@{/js/postView.js}"></script>
     <title th:text="|${post.title} - Gon's Log'|"></title>
 </head>
 
@@ -60,8 +61,8 @@
                                           id="deleteArticle"
                                           method="post">
                                     </form>
-                                    <button sec:authorize="hasRole('MANAGER')" class="btn btn-secondary ms-2"
-                                            onclick="deleteArticle()">삭 제
+                                    <button sec:authorize="hasRole('MANAGER')" class="btn btn-secondary ms-2" id="deleteBtn" th:value="${post.postId}">
+                                        삭 제
                                     </button>
 
                                     <!-- 나중에 sns 공유하기 개발해서 추가하기 -->
