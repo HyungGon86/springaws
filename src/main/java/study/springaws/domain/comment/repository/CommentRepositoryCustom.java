@@ -1,10 +1,10 @@
 package study.springaws.domain.comment.repository;
 
-import study.springaws.domain.comment.domain.Comment;
+import study.springaws.domain.comment.dto.CommentListDto;
 
 import java.util.List;
 
 public interface CommentRepositoryCustom {
 
-    List<Comment> findCommentByPostId(Long postId);
+    List<CommentListDto> findCommentByPostId(Long postId);
 }

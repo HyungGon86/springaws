@@ -657,7 +657,7 @@
     position: relative;
     max-width: 1200px;
     min-width: 70vw;
-    min-height: 800px;
+    /*min-height: 800px;*/
     font-size: 0.8em;
     overflow: auto;
 }

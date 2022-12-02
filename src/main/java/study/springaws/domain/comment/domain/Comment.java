@@ -4,6 +4,8 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 import study.springaws.domain.post.domain.Post;
 import study.springaws.domain.user.domain.User;
 import study.springaws.global.BaseTimeEntity;
@@ -14,6 +16,7 @@ import java.util.List;
 
 @Entity
 @Getter
+@DynamicInsert
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Comment extends BaseTimeEntity {
 
@@ -41,8 +44,11 @@ public class Comment extends BaseTimeEntity {
 
     private boolean secret;
 
+    @ColumnDefault("0")
+    private boolean deleteStatus;
+
     @Builder
-    public Comment(User user, Post post, Comment parent, String content, boolean secret) {
+    public Comment(User user, Post post, Comment parent, String content, boolean secret, boolean deleteStatus) {
 
         if (user != null) {
             setUser(user);
@@ -58,6 +64,7 @@ public class Comment extends BaseTimeEntity {
 
         this.content = content;
         this.secret = secret;
+        this.deleteStatus = deleteStatus;
     }
 
     /* 연관관계 메서드 */

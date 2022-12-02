@@ -1,6 +1,6 @@
 window.onload = function () {
 
-    document.getElementById('deleteBtn').addEventListener('click', function () {
+    document.getElementById('deleteBtn')?.addEventListener('click', function () {
 
         const check = confirm('해당 글을 삭제하시겠습니까?');
 
