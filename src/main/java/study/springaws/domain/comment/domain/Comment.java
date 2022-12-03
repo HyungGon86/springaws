@@ -78,11 +78,13 @@ public class Comment extends BaseTimeEntity {
         post.getComments().add(this);
     }
 
-    private void setParent(Comment parent) {
+    public void setParent(Comment parent) {
         this.parent = parent;
         parent.getChild().add(this);
     }
 
     /* 비즈니스 메서드 */
-
+    public void changeDeleteStatus(boolean deleteStatus) {
+        this.deleteStatus = deleteStatus;
+    }
 }

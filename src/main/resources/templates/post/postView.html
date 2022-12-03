@@ -28,6 +28,8 @@
     <div class="col-xxl-10 p-0 sections-container">
 
         <section>
+            <input type="hidden" id="roleArr" th:value="${#authentication.authorities}">
+            <input type="hidden" id="userId" sec:authorize="isAuthenticated()" th:value="${#authentication.getPrincipal().userId}">
 
             <div class="main ">
                 <div class="carousel-inner ">
@@ -202,6 +204,7 @@
 
                                                     <div class="d-flex flex-row align-items-center">
                                                         <small>22-04-20 15:44:44</small>
+                                                        <button class="btn p-0 m-0 fas fa-trash ms-3"></button>
                                                     </div>
                                                 </div>
 

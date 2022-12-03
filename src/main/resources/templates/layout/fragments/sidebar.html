@@ -31,18 +31,23 @@
     <ul class="list-unstyled ps-0">
 
         <!-- 나중에 깃허브 api 추가해서 여기다가 잔디 커밋 기록 넣어보자 -->
-        <!--        <li class="mb-1">-->
-        <!--            <button class="btn btn-toggle align-items-center rounded collapsed fs-5" data-bs-toggle="collapse"-->
-        <!--                    data-bs-target="#collapse-link" aria-expanded="true">Link-->
-        <!--            </button>-->
-        <!--            <div class="collapse show" id="collapse-link">-->
-        <!--                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1">-->
-        <!--                    <li><a href="https://github.com/HyungGon86" class="link-dark rounded">-->
-        <!--                        <i class="fab fa-github" style="font-size: 20px;"></i>&nbsp Github</a>-->
-        <!--                    </li>-->
-        <!--                </ul>-->
-        <!--            </div>-->
-        <!--        </li>-->
+        <li class="mb-1">
+            <button class="btn btn-toggle align-items-center rounded collapsed fs-5" data-bs-toggle="collapse"
+                    data-bs-target="#collapse-link" aria-expanded="true">Link
+            </button>
+            <div class="collapse show" id="collapse-link">
+                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1">
+                    <li><a href="https://github.com/HyungGon86" class="link-dark rounded">
+                        <i class="fab fa-github" style="font-size: 20px;"></i>&nbsp Github</a>
+                    </li>
+                </ul>
+                <div class="git-box">
+                    <div class="git-chart">
+                        <img src="https://ghchart.rshah.org/219138/HyungGon86">
+                    </div>
+                </div>
+            </div>
+        </li>
 
         <!--   카테고리 s   -->
         <li class="border-top my-3"></li>
@@ -69,14 +74,13 @@
                 <ul class="ms-1 btn-toggle-nav list-unstyled fw-normal pb-1"
                     th:each="sub : ${subCategory}" th:if="${super.id == sub.parentId}">
                     <li><a th:href="@{/post/list(category=${sub.name},page=0)}"
-                            class="link-dark rounded"
+                           class="link-dark rounded"
                            th:text="|${sub.name}(${sub.count})|">서브</a></li>
                 </ul>
             </div>
         </li>
-
-
         <!--    카테고리 e    -->
+
         <!--   최신 댓글 s    -->
         <li class="border-top my-3"></li>
         <li class="mb-1">
@@ -85,22 +89,21 @@
             </button>
 
             <div class="collapse show" id="tag-collapse-xl">
-                <!-- 나중에 최신댓글 보여줄 예정임 -->
-                <!--<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                    <li th:each="comment : ${commentsList}">
+                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li th:each="comment : ${commentList}">
                         <a class="comment-side rounded"
-                           th:href="|@{/article/view(articleId=${comment.articleId})}#commentBox|"
+                           th:href="|@{/post/view(postId=${comment.postId})}#commentBox|"
                            th:if="${comment.secret} and ${#authentication.authorities[0].authority == 'ROLE_MANAGER'}"
                            th:text="${comment.content}"></a>
                         <a class="comment-side rounded"
-                           th:href="|@{/article/view(articleId=${comment.articleId})}#commentBox|"
+                           th:href="|@{/post/view(postId=${comment.postId})}#commentBox|"
                            th:if="${comment.secret} and ${#authentication.authorities[0].authority != 'ROLE_MANAGER'}"
                            th:text="비밀댓글입니다."></a>
                         <a class="comment-side rounded"
-                           th:href="|@{/article/view(articleId=${comment.articleId})}#commentBox|"
+                           th:href="|@{/post/view(postId=${comment.postId})}#commentBox|"
                            th:if="${!comment.secret}" th:text="${comment.content}"></a>
                     </li>
-                </ul>-->
+                </ul>
             </div>
         </li>
         <!--    최신 댓글 e    -->

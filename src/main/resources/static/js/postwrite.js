@@ -48,7 +48,7 @@ window.onload = function () {
             ['insert', ['picture', 'link', 'video']],
             ['view', ['help']]
         ],
-        fontNames: ['맑은 고딕', '궁서', '굴림체', '굴림', '돋움체', '바탕체', 'Arial', 'Arial Black', 'Comic Sans MS', 'Courier New'],
+        fontNames: ['맑은 고딕', '궁서', '굴림체', '굴림', '돋움체', '바탕체', 'Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'NanumSquareNeo-Variable'],
         fontSizes: ['8', '9', '10', '11', '12', '14', '16', '18', '20', '22', '24', '28', '30', '36', '50', '72'],
         callbacks: {	//여기 부분이 이미지를 첨부하는 부분
             onImageUpload: function (files) {
@@ -65,7 +65,9 @@ window.onload = function () {
             }
         }
     });
-    // $('#summernote').summernote('fontName', '맑은 고딕');
+    $('#summernote').summernote('fontName', 'NanumSquareNeo-Variable');
+    const placeholder = document.querySelector(".note-placeholder");
+    placeholder.style.display = 'block';
 
 
     // 이미지 파일 업로드

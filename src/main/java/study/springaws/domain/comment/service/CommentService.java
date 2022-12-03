@@ -13,8 +13,6 @@ import study.springaws.domain.user.domain.User;
 import study.springaws.domain.user.repository.UserRepository;
 
 import java.util.*;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -25,6 +23,9 @@ public class CommentService {
     private final UserRepository userRepository;
     private final PostRepository postRepository;
 
+    /*
+    *  - 댓글 저장
+    * */
     @Transactional
     public void commentSave(CommentForm commentForm, Long userId) {
 
@@ -38,9 +39,16 @@ public class CommentService {
                 .secret(commentForm.isSecret())
                 .build();
 
+        if (commentForm.getParentId() != null) {
+            Comment parent = commentRepository.findById(commentForm.getParentId()).orElseThrow(() -> new IllegalArgumentException("부모댓글이 존재하지 않습니다."));
+            comment.setParent(parent);
+        }
         commentRepository.save(comment);
     }
 
+    /*
+    *  - 계층형 댓글을 가져와서 스트림으로 정렬
+    * */
     public List<CommentListDto> convertNestedStructure(Long postId) {
 
         List<CommentListDto> commentListDtoList = commentRepository.findCommentByPostId(postId);
@@ -48,16 +56,43 @@ public class CommentService {
         List<CommentListDto> result = new ArrayList<>();
         Map<Long, CommentListDto> map = new HashMap<>();
 
-        commentListDtoList.forEach(list -> {
-                    map.put(list.getCommentId(), list);
-                    if (list.getParentId() != null) {
-                        map.get(list.getParentId()).getChild().add(list);
-                    } else {
-                        result.add(list);
-                    }
-                });
+        commentListDtoList.forEach(obj -> {
+            map.put(obj.getCommentId(), obj);
+            if (obj.getParentId() != null) {
+                map.get(obj.getParentId()).getChild().add(obj);
+            } else {
+                result.add(obj);
+            }
+        });
 
         return result;
+    }
+
+    /*
+    *  - 댓글 삭제
+    * */
+    @Transactional
+    public void commentDelete(Long commentId) {
+
+        Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 댓글에 대한 요청입니다."));
+
+        if (comment.getParent() != null || comment.getChild().isEmpty()) {
+            commentRepository.delete(comment);
+
+            Optional<Comment> optionalComment = Optional.of(comment);
+
+            Integer size = optionalComment
+                    .map(Comment::getParent)
+                    .map(Comment::getChild)
+                    .map(List::size)
+                    .orElse(0);
+
+            if (size == 1 && comment.getParent().isDeleteStatus()) {
+                commentRepository.delete(comment.getParent());
+            }
+        } else {
+            comment.changeDeleteStatus(true);
+        }
     }
 
 }

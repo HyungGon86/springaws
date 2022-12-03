@@ -45,7 +45,7 @@ public class Post extends BaseTimeEntity {
 
     private String thumbnailUrl;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
 
     @OneToMany(mappedBy = "post")

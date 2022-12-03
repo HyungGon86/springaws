@@ -32,7 +32,7 @@ public class Category extends BaseTimeEntity {
 
     private int tier;
 
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category", orphanRemoval = true)
     private List<Post> posts = new ArrayList<>();
 
     @Builder

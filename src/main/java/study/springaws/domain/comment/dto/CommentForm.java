@@ -8,6 +8,7 @@ import javax.validation.constraints.NotBlank;
 public class CommentForm {
 
     private Long postId;
+    private Long parentId;
 
     @NotBlank
     private String content;
@@ -17,8 +18,9 @@ public class CommentForm {
     public CommentForm() {
     }
 
-    public CommentForm(Long postId, String content, boolean secret) {
+    public CommentForm(Long postId, Long parentId, String content, boolean secret) {
         this.postId = postId;
+        this.parentId = parentId;
         this.content = content;
         this.secret = secret;
     }

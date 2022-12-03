@@ -4,6 +4,7 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import study.springaws.domain.comment.dto.CommentListDto;
+import study.springaws.domain.comment.dto.SidebarCommentDto;
 
 import java.util.List;
 
@@ -22,14 +23,14 @@ public class CommentRepositoryCustomImpl implements CommentRepositoryCustom{
                                 CommentListDto.class,
                                 comment.id.as("commentId"),
                                 comment.parent.id.as("parentId"),
+                                comment.user.id.as("userId"),
                                 comment.content,
                                 user.nickname,
                                 user.imgUrl,
                                 comment.secret,
                                 comment.deleteStatus,
                                 comment.createdDate
-                        )
-                )
+                        ))
                 .from(comment)
                 .innerJoin(comment.user, user)
                 .leftJoin(comment.parent)
@@ -38,5 +39,19 @@ public class CommentRepositoryCustomImpl implements CommentRepositoryCustom{
                         comment.parent.id.asc().nullsFirst(),
                         comment.createdDate.asc()
                 ).fetch();
+    }
+
+    @Override
+    public List<SidebarCommentDto> sidebarCommentList() {
+        return queryFactory.select(
+                        Projections.constructor(
+                                SidebarCommentDto.class,
+                                comment.post.id.as("postId"),
+                                comment.content,
+                                comment.secret
+                        ))
+                .from(comment)
+                .orderBy(comment.createdDate.desc())
+                .fetch();
     }
 }

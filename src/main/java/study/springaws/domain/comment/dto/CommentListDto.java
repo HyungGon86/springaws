@@ -1,6 +1,5 @@
 package study.springaws.domain.comment.dto;
 
-import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -12,6 +11,7 @@ public class CommentListDto {
 
     private Long commentId;
     private Long parentId;
+    private Long userId;
     private String content;
     private String nickname;
     private String imgUrl;
@@ -24,10 +24,10 @@ public class CommentListDto {
     public CommentListDto() {
     }
 
-    @Builder
-    public CommentListDto(Long commentId, Long parentId, String content, String nickname, String imgUrl, boolean secret, boolean deleteStatus, LocalDateTime createdDate) {
+    public CommentListDto(Long commentId, Long parentId, Long userId, String content, String nickname, String imgUrl, boolean secret, boolean deleteStatus, LocalDateTime createdDate) {
         this.commentId = commentId;
         this.parentId = parentId;
+        this.userId = userId;
         this.content = content;
         this.nickname = nickname;
         this.imgUrl = imgUrl;
