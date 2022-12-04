@@ -9,7 +9,7 @@ import study.springaws.domain.post.domain.Post;
 
 import java.util.List;
 
-public interface AttachedFileRepository extends JpaRepository<AttachedFile, Long> {
+public interface AttachedFileRepository extends JpaRepository<AttachedFile, Long>, AttachedFileRepositoryCustom {
 
     @Modifying
     @Query("update AttachedFile f set f.post = :post where f.id in :filesId")

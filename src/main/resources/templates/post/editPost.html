@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <th:block th:replace="layout/fragments/header :: header">
+    <meta charset="UTF-8">
+  </th:block>
+  <script th:src="@{/js/summernote/summernote-lite.js}"></script>
+  <script th:src="@{/js/summernote/lang/summernote-ko-KR.js}"></script>
+  <script th:src="@{/js/postwrite.js}"></script>
+  <link rel="stylesheet" th:href="@{/css/summernote/summernote-lite.css}">
+  <link rel="stylesheet" th:href="@{/css/post-form.css}">
+  <title th:text="|${postForm.title} - Gon's Log'|"></title>
+</head>
+<body>
+
+<section class="row g-0 row-cols-xxl-2 g-xxl-0 p-0 ">
+
+  <!-- sidebar-xxl -->
+  <div class="bg-light sidebar col-xxl-2 d-none d-xxl-block p-0 overflow-auto">
+    <div class="p-4 sidebar-inner bg-light">
+      <div th:replace="layout/fragments/sidebar.html :: sideBar"></div>
+    </div>
+  </div>
+
+  <div class="bg-light col-xxl-2 d-none d-xxl-block p-0">
+  </div>
+
+  <!-- sections -->
+  <div class="col-xxl-10 p-0 sections-container">
+
+
+    <section>
+
+      <div id="thumbBox" style="display: none" th:style="${postForm.thumbnailUrl == '' ? 'display : none' : ''}">
+        <div class="card d-flex align-items-center justify-content-center thumbBox">
+          <img src="" th:src="${postForm.thumbnailUrl}" id="thumbnailPreView" class="card-img-top w-100 vh-100 cover thumbImg" alt="">
+          <input type="hidden" id="thumbnailId" th:value="${postForm.thumbnailId}">
+        </div>
+      </div>
+
+      <div style="margin-bottom: 100px"></div>
+
+      <div class="container">
+
+        <div class="row p-5 writeWrap">
+          <div class="d-flex flex-row-reverse">
+
+            <label class="btn btn-secondary" for="thumbnail">
+              썸네일 등록
+            </label>
+            <input type="file" id="thumbnail" name="thumbnail" accept="image/*" class="d-none">
+
+          </div>
+
+          <form th:action th:object="${postForm}" id="postForm" enctype="multipart/form-data" method="post">
+
+            <input type="hidden" name="thumbnailUrl" id="thumbnailUrl" th:value="${postForm.thumbnailUrl}"/>
+            <input type="hidden" th:field="*{postId}"/>
+
+            <div class="mt-3 mb-3">
+              <select id="category" class="form-select ps-3" aria-label="Select category" th:field="${postForm.category}">
+                <option value="0">카테고리를 선택해주세요</option>
+                <option th:each="sub : ${subCategory}" th:value="${sub.id}" th:text="${sub.name}">Java
+                </option>
+              </select>
+            </div>
+
+            <div class="col mt-3">
+              <input type="text" class="form-control" th:field="*{title}" placeholder="제목을 입력해주세요."/>
+            </div>
+
+            <div class="col mt-3">
+              <textarea id="summernote" th:field="*{content}"></textarea>
+            </div>
+
+            <th:block th:if="${!#lists.isEmpty(postForm.fileDtoList)}">
+              <input type="hidden" th:each="file : ${postForm.fileDtoList}" th:id="${file.fileId}" name="fileList"
+                     th:data-path="${file.filePath}" th:value="${file.fileId}">
+            </th:block>
+
+          </form>
+
+          <div class="col-12 mt-3">
+            <div id="attachDiv" class="col">
+              <span>게시물 이미지 목록</span>
+
+              <div class="mt-3">
+                <ul id="fileUl">
+                  <li th:if="${!#lists.isEmpty(postForm.fileDtoList)}" th:each="file : ${postForm.fileDtoList}"
+                      class="fileList" th:data-id="${file.fileId}">
+                    <span th:text="${file.originalName}"></span>
+                    <button type="button" th:value="${file.fileId}" class="fileDeleteBtn">
+                      <i class="fa-regular fa-square-minus delete" style="pointer-events: none"></i>
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="row justify-content-evenly mt-4 mb-5 g-0">
+            <button class="btn btn-secondary col-4" id="modifyBtn">수 정</button>
+            <button class="btn btn-secondary col-4" onclick="history.back()">취 소</button>
+          </div>
+        </div>
+
+
+        <input type="file" id="attachFiles" multiple="multiple" style="display: none">
+      </div>
+    </section>
+
+    <footer class="footer bg-light mt-5">
+      <div class="container text-center p-2">
+        <h5><span class="text-muted">Copyright ©Gon</span></h5>
+      </div>
+    </footer>
+  </div>
+</section>
+
+</body>
+</html>

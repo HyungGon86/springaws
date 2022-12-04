@@ -9,6 +9,7 @@ import org.hibernate.annotations.DynamicInsert;
 import study.springaws.domain.category.domain.Category;
 import study.springaws.domain.comment.domain.Comment;
 import study.springaws.domain.file.domain.AttachedFile;
+import study.springaws.domain.post.dto.EditPostForm;
 import study.springaws.domain.user.domain.User;
 import study.springaws.global.BaseTimeEntity;
 
@@ -82,5 +83,14 @@ public class Post extends BaseTimeEntity {
     // 조회 수 증가
     public void increaseHits() {
         this.hit++;
+    }
+
+    public void editPost(EditPostForm editPostForm, Category category) {
+        if (category != null) {
+            changeCategory(category);
+        }
+        this.title = editPostForm.getTitle();
+        this.content = editPostForm.getContent();
+        this.thumbnailUrl = editPostForm.getThumbnailUrl();
     }
 }

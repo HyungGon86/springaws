@@ -11,8 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import study.springaws.domain.category.service.CategoryService;
 import study.springaws.domain.post.domain.Post;
+import study.springaws.domain.post.dto.EditPostForm;
 import study.springaws.domain.post.dto.PostForm;
 import study.springaws.domain.post.dto.PostListDto;
 import study.springaws.domain.post.dto.PostViewDto;
@@ -43,8 +43,8 @@ public class PostController {
             return "post/post-form";
         }
 
-        postService.postSave(postForm, principalDetails.getUserId());
-        return "redirect:/";
+        Post post = postService.postSave(postForm, principalDetails.getUserId());
+        return "redirect:/post/view?postId=" + post.getId();
     }
 
     @GetMapping("/list")
@@ -77,6 +77,29 @@ public class PostController {
         }
 
         model.addAttribute("post", postViewDto);
+        model.addAttribute("postSortByCategory", postService.postByCategoryDto(postViewDto.getCategory()));
         return "post/postView";
+    }
+
+    @GetMapping("/edit")
+    public String editPost(@RequestParam Long postId,
+                           Model model) {
+
+        model.addAttribute("postForm", postService.editPostDto(postId));
+        return "post/editPost";
+    }
+
+    @PostMapping("/edit")
+    public String modifyingPost(@Validated @ModelAttribute EditPostForm postForm,
+                             Errors errors) {
+
+        System.out.println("errors = " + errors);
+
+        if (errors.hasErrors()) {
+            return "post/editPost";
+        }
+
+        postService.modifyingPost(postForm);
+        return "redirect:/post/view?postId=" + postForm.getPostId();
     }
 }

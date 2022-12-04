@@ -66,8 +66,12 @@ window.onload = function () {
         }
     });
     $('#summernote').summernote('fontName', 'NanumSquareNeo-Variable');
-    const placeholder = document.querySelector(".note-placeholder");
-    placeholder.style.display = 'block';
+
+    if (!document.getElementById('title').value) {
+        const placeholder = document.querySelector(".note-placeholder");
+        placeholder.style.display = 'block';
+    }
+
 
 
     // 이미지 파일 업로드
@@ -101,11 +105,6 @@ window.onload = function () {
             }
         });
     }
-
-    // 파일 첨부버튼 클릭시 인풋파일 클릭 이벤트 실행
-    // document.getElementById('attachBtn').addEventListener('click', () => {
-    //     document.getElementById('attachFiles').click();
-    // });
 
     document.getElementById('attachFiles').addEventListener('change', function (e) {
         let files = e.target.files;
@@ -142,7 +141,7 @@ window.onload = function () {
             let fileInput = document.getElementById(e.target.value);
             fileInput.setAttribute('name', 'fileDeleteList');
 
-            if (document.getElementById('thumbnailUrl').value) {
+            if (document.getElementById('thumbnailId').value === e.target.value) {
 
                 document.getElementById('thumbBox').style.display = 'none';
                 document.getElementById('thumbnailUrl').value = '';
@@ -167,33 +166,46 @@ window.onload = function () {
         }
     });
 
-    document.getElementById('registerBtn').addEventListener('click', () => {
+    document.addEventListener('click', function (e) {
 
-        const image = document.querySelectorAll(".note-editable img"); // 게시물에 찐막으로 남아잇는 이미지태그
-        const category = document.getElementById('category');
-        const title = document.getElementById('title');
+        if (e.target.id === 'registerBtn' || e.target.id === 'modifyBtn') {
+            const image = document.querySelectorAll(".note-editable img"); // 게시물에 찐막으로 남아잇는 이미지태그
+            const category = document.getElementById('category');
+            const title = document.getElementById('title');
 
-        const content = document.querySelector(".note-editable");
-        let str = '';
+            const content = document.querySelector(".note-editable");
+            let str = '';
 
-        for (const child of content.children) {
-            str += child.innerText.replace(/\s/g, '');
+            for (const child of content.children) {
+                str += child.innerText.replace(/\s/g, '');
 
+            }
+            if (!str && !image.length) {
+                alert('내용을 입력해주세요');
+                return;
+            } else if (category.value === '0') {
+                alert('카테고리를 선택해주세요.');
+                category.focus();
+                return;
+            } else if (!title.value) {
+                alert('제목을 입력해주세요.');
+                title.focus();
+                return;
+            }
+
+            if (e.target.id === 'registerBtn') {
+                if (!confirm('글을 작성하시겠습니까?')) {
+                    return;
+                }
+            } else if (e.target.id === 'modifyBtn') {
+                if (!confirm('글을 수정하시겠습니까?')) {
+                    return;
+                }
+            }
+            document.getElementById('postForm').submit();
         }
-        if (!str && !image.length) {
-            alert('내용을 입력해주세요');
-            return;
-        } else if (category.value === '0') {
-            alert('카테고리를 선택해주세요.');
-            category.focus();
-            return;
-        } else if (!title.value) {
-            alert('제목을 입력해주세요.');
-            title.focus();
-            return;
-        }
 
-        document.getElementById('postForm').submit();
+
     });
 
     document.getElementById('thumbnail').addEventListener("change", e => {
@@ -202,7 +214,7 @@ window.onload = function () {
 
     const uploadImg = function (input) {
 
-        if(input.files && input.files[0]) {
+        if (input.files && input.files[0]) {
 
             let formData = new FormData();
             formData.append('thumbnailFile', input.files[0]);
@@ -214,13 +226,19 @@ window.onload = function () {
                 contentType: false,
                 processData: false,
                 success: function (data) {
-
-                    console.log(data.filePath);
-
-                    document.getElementById('thumbnailUrl').value = String(data.filePath);
-                    document.getElementById('thumbnailPreView').src = data.filePath;
-                    document.getElementById('thumbBox').style.display = '';
-
+                    const thumbnailUrl = document.getElementById('thumbnailUrl');
+                    const thumbnailPreView = document.getElementById('thumbnailPreView');
+                    const thumbBox = document.getElementById('thumbBox');
+                    const thumbnailId = document.getElementById('thumbnailId');
+                    if (thumbnailUrl.value) {
+                        document.querySelector(`li[data-id="${thumbnailId.value}"]`).remove();
+                        let fileInput = document.getElementById(thumbnailId.value);
+                        fileInput.setAttribute('name', 'fileDeleteList');
+                    }
+                    thumbnailUrl.value = String(data.filePath);
+                    thumbnailPreView.src = data.filePath;
+                    thumbBox.style.display = '';
+                    thumbnailId.value = String(data.fileId);
                     createFileList(data);
                 }
             });

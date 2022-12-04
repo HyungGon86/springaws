@@ -10,6 +10,7 @@ import study.springaws.domain.file.dto.ThumbnailFileDto;
 import study.springaws.domain.file.dto.UploadFileDto;
 import study.springaws.domain.file.repository.AttachedFileRepository;
 import study.springaws.domain.post.domain.Post;
+import study.springaws.domain.post.repository.PostRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +21,7 @@ import java.util.List;
 public class AttachedFileService {
 
     private final AttachedFileRepository attachedFileRepository;
+    private final PostRepository postRepository;
 
     @Value("${file.dir}")
     private String fileDir;

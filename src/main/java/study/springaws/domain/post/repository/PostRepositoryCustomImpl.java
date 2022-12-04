@@ -9,15 +9,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
 import study.springaws.domain.category.domain.Category;
-import study.springaws.domain.category.domain.QCategory;
-import study.springaws.domain.post.domain.QPost;
+import study.springaws.domain.post.dto.PostByCategoryDto;
 import study.springaws.domain.post.dto.PostListDto;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import static study.springaws.domain.category.domain.QCategory.*;
-import static study.springaws.domain.post.domain.QPost.*;
+import static study.springaws.domain.post.domain.QPost.post;
 
 @RequiredArgsConstructor
 public class PostRepositoryCustomImpl implements PostRepositoryCustom{
@@ -76,11 +73,25 @@ public class PostRepositoryCustomImpl implements PostRepositoryCustom{
         return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchOne);
     }
 
+    @Override
+    public List<PostByCategoryDto> postByCategory(Category category) {
+        return queryFactory.select(
+                        Projections.constructor(
+                                PostByCategoryDto.class,
+                                post.id,
+                                post.title
+                        ))
+                .from(post)
+                .where(post.category.eq(category))
+                .orderBy(post.createdDate.desc())
+                .fetch();
+    }
+
     private BooleanExpression categoryEq(Category category) {
         return category != null ? post.category.eq(category) : null;
     }
 
     private BooleanExpression categoryIn(List<Category> categoryList) {
-        return categoryList.isEmpty() ? post.category.in(categoryList) : null;
+        return categoryList.isEmpty() ? null : post.category.in(categoryList);
     }
 }
