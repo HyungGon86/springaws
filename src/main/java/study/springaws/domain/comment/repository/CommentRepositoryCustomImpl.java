@@ -3,6 +3,7 @@ package study.springaws.domain.comment.repository;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import study.springaws.domain.comment.dto.CommentListDto;
 import study.springaws.domain.comment.dto.SidebarCommentDto;
 
@@ -42,6 +43,7 @@ public class CommentRepositoryCustomImpl implements CommentRepositoryCustom{
     }
 
     @Override
+    @Cacheable(value = "layoutRecentCommentCaching", key = "0")
     public List<SidebarCommentDto> sidebarCommentList() {
         return queryFactory.select(
                         Projections.constructor(

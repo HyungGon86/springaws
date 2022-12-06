@@ -5,6 +5,7 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
@@ -44,6 +45,32 @@ public class PostRepositoryCustomImpl implements PostRepositoryCustom{
                 .select(post.count())
                 .from(post)
                 .where(categoryEq(category));
+
+        return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchOne);
+    }
+
+    @Override
+    public Page<PostListDto> postListByKeyword(String keyword, Pageable pageable) {
+        List<PostListDto> content = queryFactory
+                .select(Projections.constructor(
+                        PostListDto.class,
+                        post.id,
+                        post.createdDate,
+                        post.title,
+                        post.content,
+                        post.thumbnailUrl
+                ))
+                .from(post)
+                .where(post.title.contains(keyword).or(post.content.contains(keyword)))
+                .orderBy(post.id.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+        JPAQuery<Long> countQuery = queryFactory
+                .select(post.count())
+                .from(post)
+                .where(post.title.contains(keyword).or(post.content.contains(keyword)));
 
         return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchOne);
     }
@@ -89,6 +116,7 @@ public class PostRepositoryCustomImpl implements PostRepositoryCustom{
     }
 
     @Override
+    @Cacheable(value = "layoutCaching", key = "3")
     public List<PopularPostsDto> popularPosts() {
         return queryFactory.select(
                         Projections.constructor(

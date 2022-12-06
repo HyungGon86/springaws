@@ -13,6 +13,8 @@ public interface PostRepositoryCustom {
 
     Page<PostListDto> postListByCategory(Category category, Pageable pageable);
 
+    Page<PostListDto> postListByKeyword(String keyword, Pageable pageable);
+
     Page<PostListDto> postListBySuperCategory(List<Category> categoryList, Pageable pageable);
 
     List<PostByCategoryDto> postByCategory(Category category);

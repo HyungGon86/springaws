@@ -1,6 +1,7 @@
 package study.springaws.domain.post.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -53,6 +54,7 @@ public class PostService {
         return post;
     }
 
+    @Cacheable(value = "layoutCaching", key = "2")
     public Long totalPostCount() {
 
         return postRepository.countByCategoryIn(categoryService.parentIsNotNull());
@@ -141,6 +143,10 @@ public class PostService {
         Category category = categoryRepository.findByName(name);
 
         return postRepository.postByCategory(category);
+    }
+
+    public Page<PostListDto> postListByKeyword(String keyword, Pageable pageable) {
+        return postRepository.postListByKeyword(keyword, pageable);
     }
 
 }

@@ -64,6 +64,23 @@ public class PostController {
         return "post/postList";
     }
 
+    @GetMapping("/list/search")
+    public String postListByKeyword(@RequestParam String keyword,
+                                     @PageableDefault(size = 5) Pageable pageable,
+                                     Model model) {
+
+        Page<PostListDto> postListDto = postService.postListByKeyword(keyword, pageable);
+        int totalPages = postListDto.getTotalPages() - 1;
+
+        int start = (int) (Math.floor(postListDto.getNumber() / postListDto.getSize()) * postListDto.getSize());
+        int end = Math.min(totalPages == -1 ? 0 : totalPages, postListDto.getSize() + start - 1);
+
+        model.addAttribute("postList", postListDto);
+        model.addAttribute("start", start);
+        model.addAttribute("end", end);
+        return "post/postList";
+    }
+
     @GetMapping("/view")
     public String postView(@RequestParam Long postId,
                            @AuthenticationPrincipal PrincipalDetails principalDetails,

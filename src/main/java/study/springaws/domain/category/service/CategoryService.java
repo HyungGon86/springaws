@@ -1,6 +1,7 @@
 package study.springaws.domain.category.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import study.springaws.domain.category.domain.Category;
@@ -16,6 +17,7 @@ public class CategoryService {
 
     private final CategoryRepository categoryRepository;
 
+    @Cacheable(value = "layoutCaching", key = "0")
     public List<CategoryEditForm> superCategory() {
         List<CategoryEditForm> superCategory = categoryRepository.superCategory();
         List<CategoryEditForm> subCategory = categoryRepository.subCategory();
@@ -34,6 +36,7 @@ public class CategoryService {
         return superCategory;
     }
 
+    @Cacheable(value = "layoutCaching", key = "1")
     public List<CategoryEditForm> subCategory() {
         return categoryRepository.subCategory();
     }
