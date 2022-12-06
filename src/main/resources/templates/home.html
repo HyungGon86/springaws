@@ -4,7 +4,7 @@
     <th:block th:replace="layout/fragments/header :: header">
         <meta charset="UTF-8">
     </th:block>
-    <title>Gon's Blog</title>
+    <title>Gon's Log</title>
 </head>
 
 <body>
@@ -17,15 +17,84 @@
             <div th:replace="layout/fragments/sidebar.html :: sideBar"></div>
         </div>
     </div>
+
     <div class="bg-light col-xxl-2 d-none d-xxl-block p-0">
     </div>
 
     <!-- sections -->
     <div class="col-xxl-10 p-0 sections-container">
 
+        <button id="arrow" class="arrow-up">
+            <i class="fas fa-arrow-up"></i>
+        </button>
 
         <section>
-            <h5>테스트</h5>
+
+            <div id="carouselForMain" class="carousel slide carousel-fade" data-bs-ride="carousel">
+
+                <div class="carousel-inner">
+                    <div class="carousel-item mainItem" th:each="post, num : ${popularPosts}"
+                         th:classappend="${num.index}==0? active">
+                        <a th:href="@{/post/view(postId=${post.id})}">
+                            <img th:src="${post.thumbnailUrl}"
+                                 class="w-100 vh-100 cover main-image" alt="...">
+                            <div class="card-img-overlay text-white text-center row justify-content-center align-content-center text-shadow">
+                                <h1 class="" th:text="${post.title}">첫번째 이미지</h1>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselForMain"
+                        data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselForMain"
+                        data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+
+            </div>
+
+            <div class="recent-cards mt-5 ms-4 me-4">
+
+                <div class="cards-container container p-0">
+                    <h1 class="text-center">인기 포스팅</h1>
+                    <hr>
+                </div>
+            </div>
+
+            <div class="mt-5 pt-2 popular-card-section ">
+                <div class="cards-container container p-0 ">
+                    <div class=" row g-0 row-cols-2 row-cols-md-3">
+                        <div class="col g-1 g-md-4" th:each="post,num : ${popularPosts}">
+                            <a th:href="@{/post/view(postId=${post.id})}">
+                                <div class=" card ratio ratio-1x1 popular-card ">
+                                    <img th:src="${post.thumbnailUrl}"/>
+                                    <div class="card-description text-center">
+                                        <small><small th:text="|작성일 : ${#temporals.format(post.createdDate, 'yyyy-MM-dd')}|"></small></small>
+                                        <p class="text-truncate" th:text="${post.title}">타이틀</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="py-1 mt-5" style="color: rgb(212, 200, 184);">
+
+            <div class="recent-cards mt-5 ms-4 me-4">
+
+                <div class="cards-container container p-0" id="infiniteScrollBox">
+                    <h1 class="text-center">최신 포스팅</h1>
+                    <hr>
+                    <!--     infinityScroll     -->
+                    <div id="nextPagination"></div>
+                </div>
+            </div>
         </section>
 
         <footer class="footer bg-light mt-5">
@@ -36,4 +105,5 @@
     </div>
 </section>
 </body>
+<script th:src="@{/js/arrow.js}"></script>
 </html>

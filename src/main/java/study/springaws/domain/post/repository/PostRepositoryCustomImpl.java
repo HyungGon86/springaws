@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
 import study.springaws.domain.category.domain.Category;
+import study.springaws.domain.post.dto.PopularPostsDto;
 import study.springaws.domain.post.dto.PostByCategoryDto;
 import study.springaws.domain.post.dto.PostListDto;
 
@@ -84,6 +85,22 @@ public class PostRepositoryCustomImpl implements PostRepositoryCustom{
                 .from(post)
                 .where(post.category.eq(category))
                 .orderBy(post.createdDate.desc())
+                .fetch();
+    }
+
+    @Override
+    public List<PopularPostsDto> popularPosts() {
+        return queryFactory.select(
+                        Projections.constructor(
+                                PopularPostsDto.class,
+                                post.id,
+                                post.thumbnailUrl,
+                                post.title,
+                                post.createdDate
+                        ))
+                .from(post)
+                .orderBy(post.hit.desc())
+                .limit(6)
                 .fetch();
     }
 

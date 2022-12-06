@@ -5,20 +5,20 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import study.springaws.domain.category.service.CategoryService;
-import study.springaws.domain.post.service.PostService;
-
-import java.util.List;
+import study.springaws.domain.post.repository.PostRepository;
 
 @Controller
 @Slf4j
 @RequiredArgsConstructor
 public class HomeController {
 
+    private final PostRepository postRepository;
+
     @GetMapping("/")
     public String home(Model model) {
         log.info("홈 페이지 접속");
+
+        model.addAttribute("popularPosts", postRepository.popularPosts());
         return "home";
     }
 

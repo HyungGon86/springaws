@@ -26,6 +26,10 @@
     <!-- sections -->
     <div class="col-xxl-10 p-0 sections-container">
 
+        <button id="arrow" class="arrow-up">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+
         <section>
             <input type="hidden" id="roleArr" th:value="${#authentication.authorities}">
             <input type="hidden" id="userId" sec:authorize="isAuthenticated()"
@@ -208,4 +212,5 @@
     </div>
 </section>
 </body>
+<script th:src="@{/js/arrow.js}"></script>
 </html>

@@ -143,5 +143,4 @@ public class PostService {
         return postRepository.postByCategory(category);
     }
 
-
 }
