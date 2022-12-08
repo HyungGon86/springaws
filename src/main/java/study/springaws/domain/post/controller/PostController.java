@@ -37,7 +37,7 @@ public class PostController {
     public String write(@Validated @ModelAttribute PostForm postForm, Errors errors,
                         @AuthenticationPrincipal PrincipalDetails principalDetails) {
 
-        System.out.println("errors = " + errors);
+        /*System.out.println("errors = " + errors);*/
 
         if (errors.hasErrors()) {
             return "post/post-form";
@@ -110,7 +110,7 @@ public class PostController {
     public String modifyingPost(@Validated @ModelAttribute EditPostForm postForm,
                              Errors errors) {
 
-        System.out.println("errors = " + errors);
+        /*System.out.println("errors = " + errors);*/
 
         if (errors.hasErrors()) {
             return "post/editPost";

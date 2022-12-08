@@ -1,6 +1,7 @@
 package study.springaws.domain.comment.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import study.springaws.domain.comment.domain.Comment;
@@ -27,6 +28,7 @@ public class CommentService {
     *  - 댓글 저장
     * */
     @Transactional
+    @CacheEvict(value = "layoutRecentCommentCaching", allEntries = true)
     public void commentSave(CommentForm commentForm, Long userId) {
 
         User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
@@ -72,6 +74,7 @@ public class CommentService {
     *  - 댓글 삭제
     * */
     @Transactional
+    @CacheEvict(value = "layoutRecentCommentCaching", allEntries = true)
     public void commentDelete(Long commentId) {
 
         Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 댓글에 대한 요청입니다."));

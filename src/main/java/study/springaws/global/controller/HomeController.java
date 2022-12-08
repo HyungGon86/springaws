@@ -16,15 +16,12 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(Model model) {
-        log.info("홈 페이지 접속");
-
         model.addAttribute("popularPosts", postRepository.popularPosts());
         return "home";
     }
 
     @GetMapping("/login")
     public String loginForm(Model model) {
-        log.info("로그인 페이지 이동");
         return "login/loginForm";
     }
 

@@ -1,6 +1,7 @@
 package study.springaws.domain.post.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -33,6 +34,7 @@ public class PostService {
     private final UserRepository userRepository;
 
     @Transactional
+    @CacheEvict(value = "layoutCaching", allEntries = true)
     public Post postSave(PostForm postForm, Long userId) {
 
         Category category = categoryRepository.findById(postForm.getCategory()).orElseThrow(() -> new IllegalStateException("카테고리가 존재하지 않습니다."));
@@ -84,6 +86,7 @@ public class PostService {
     }
 
     @Transactional
+    @CacheEvict(value = "layoutCaching", allEntries = true)
     public void postDelete(Long postId) {
         Post post = postRepository.findById(postId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 글에 대한 요청입니다."));
 
@@ -127,6 +130,7 @@ public class PostService {
     }
 
     @Transactional
+    @CacheEvict(value = "layoutCaching", allEntries = true)
     public void modifyingPost(EditPostForm editPostForm) {
 
         Category category = categoryRepository.findById(editPostForm.getCategory()).orElseThrow(() -> new IllegalStateException("카테고리가 존재하지 않습니다."));
