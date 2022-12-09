@@ -1,4 +1,9 @@
 spring:
+  profiles:
+    active: local # 기본 환경 선택
+
+---
+spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: springaws
