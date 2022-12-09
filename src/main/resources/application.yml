@@ -2,7 +2,7 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: springaws
-    url: jdbc:mysql://localhost:3306/springaws?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
+    url: jdbc:mysql://springboot-webservice.c7brf6sdt5ut.ap-northeast-2.rds.amazonaws.com:3306/webservice?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
     password: gudrhs11
   jpa:
     open-in-view: false
@@ -14,7 +14,6 @@ spring:
 #    show-sql: true
     hibernate:
       ddl-auto: update
-    database: mysql
 
   servlet:
     multipart:
