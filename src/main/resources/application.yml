@@ -15,6 +15,9 @@ spring:
     hibernate:
       ddl-auto: update
 
+  pid:
+    file: /home/ec2-user/app/step2/springaws.pid
+
   servlet:
     multipart:
       enabled: 'true'
