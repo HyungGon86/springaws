@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: set1
+    active: local
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -38,6 +38,8 @@ spring:
             scope:
               - email
               - profile
+server:
+  port: 8080
 
 logging:
   level:
