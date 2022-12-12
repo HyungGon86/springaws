@@ -2,6 +2,7 @@ spring:
   config:
     import: real-application.yml
   profiles:
+    active: local
     group:
       real: real-db
       set1: real-db
