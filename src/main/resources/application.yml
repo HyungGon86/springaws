@@ -2,11 +2,7 @@ spring:
   config:
     import: static/config/real-application.yml
   profiles:
-    active: local
-    group:
-      real: real-db
-      set1: real-db
-      set2: real-db
+    active: set1
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -58,13 +54,30 @@ file:
 spring:
   config:
     activate:
-      on-profile: real-db
+      on-profile: set1
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: springaws
     url: jdbc:mysql://springboot-webservice.c7brf6sdt5ut.ap-northeast-2.rds.amazonaws.com:3306/webservice?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
     password: gudrhs11
+
+server:
+  port: 8081
+---
+spring:
+  config:
+    activate:
+      on-profile: set2
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: springaws
+    url: jdbc:mysql://springboot-webservice.c7brf6sdt5ut.ap-northeast-2.rds.amazonaws.com:3306/webservice?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
+    password: gudrhs11
+
+server:
+  port: 8082
 
 
 
