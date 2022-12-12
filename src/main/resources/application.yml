@@ -1,17 +1,26 @@
 spring:
+  config:
+    import: real-application.yml
+  profiles:
+    group:
+      real: real-db
+      set1: real-db
+      set2: real-db
+
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: springaws
-    url: jdbc:mysql://springboot-webservice.c7brf6sdt5ut.ap-northeast-2.rds.amazonaws.com:3306/webservice?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
+    url: jdbc:mysql://localhost:3306/springaws?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
     password: gudrhs11
+
   jpa:
     open-in-view: false
     properties:
       hibernate:
         format_sql: true
         default_batch_fetch_size: 100
-#        use_sql_comments: true
-#    show-sql: true
+    #        use_sql_comments: true
+    #    show-sql: true
     hibernate:
       ddl-auto: update
 
@@ -35,7 +44,6 @@ spring:
               - email
               - profile
 
-
 logging:
   level:
     org.hibernate.SQL: debug
@@ -44,3 +52,24 @@ logging:
 file:
   dir: C:/springAws/attachedFiles/
   thumbnailDir : C:/springAws/thumbnail/
+
+---
+spring:
+  config:
+    activate:
+      on-profile: real-db
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: springaws
+    url: jdbc:mysql://springboot-webservice.c7brf6sdt5ut.ap-northeast-2.rds.amazonaws.com:3306/webservice?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
+    password: gudrhs11
+
+
+
+
+
+
+
+
+
