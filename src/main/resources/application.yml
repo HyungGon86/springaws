@@ -1,6 +1,4 @@
 spring:
-  config:
-    import: static/config/real-application.yml
   profiles:
     active: set1
 
