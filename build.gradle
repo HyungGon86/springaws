@@ -45,6 +45,7 @@ dependencies {
 
     implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.8.1'
     implementation 'com.google.code.gson:gson'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
     implementation 'org.springframework.boot:spring-boot-starter-cache'
     implementation group: 'net.sf.ehcache', name: 'ehcache', version: '2.10.9.2'
