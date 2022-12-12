@@ -1,6 +1,6 @@
 spring:
   config:
-    import: real-application.yml
+    import: static/config/real-application.yml
   profiles:
     active: local
     group:
