@@ -8,6 +8,8 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import study.springaws.global.logtrace.LogTrace;
+import study.springaws.global.logtrace.ThreadLocalLogTrace;
 
 import javax.persistence.EntityManager;
 
@@ -30,6 +32,11 @@ public class SpringAwsApplication {
     @Bean
     public BCryptPasswordEncoder encodePwd() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public LogTrace logTrace() {
+        return new ThreadLocalLogTrace();
     }
 
 }
