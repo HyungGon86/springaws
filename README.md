@@ -39,9 +39,8 @@
 - SpringBoot 2.7.5
 - SpringBoot Security
 - Spring Data JPA
-- Mybatis
 - EhCache
-- Qdsl
+- QuesyDsl
 
 #### Build tool
 - Gradle
