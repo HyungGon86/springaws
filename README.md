@@ -134,7 +134,7 @@ summernote editor는 기본적으로 base64로 인코딩 후 저장하는 방식
 
 그래서 callback을 이용하여 이미지를 특정 경로에 업로드 후 고유한 url를 리턴하는 방식으로 구현하였습니다.
 
-[서버단에서 처리하는 컨트롤러]https://github.com/HyungGon86/springaws/blob/master/src/main/java/study/springaws/domain/post/controller/PostController.java)
+[서버단에서 처리하는 컨트롤러](https://github.com/HyungGon86/springaws/blob/master/src/main/java/study/springaws/domain/post/controller/PostController.java)
 
 
 ### 기본적인 게시물 CRUD
