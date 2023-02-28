@@ -134,7 +134,7 @@ summernote editor는 기본적으로 base64로 인코딩 후 저장하는 방식
 
 그래서 callback을 이용하여 이미지를 특정 경로에 업로드 후 고유한 url를 리턴하는 방식으로 구현하였습니다.
 
-[서버단에서 처리하는 컨트롤러]https://github.com/HyungGon86/springaws/blob/master/src/main/java/study/springaws/domain/post/controller/PostController.java)
+[서버단에서 처리하는 컨트롤러](https://github.com/HyungGon86/springaws/blob/master/src/main/java/study/springaws/domain/post/controller/PostController.java)
 
 
 ### 기본적인 게시물 CRUD
@@ -157,6 +157,8 @@ summernote editor는 기본적으로 base64로 인코딩 후 저장하는 방식
 댓글과 대댓글의 경우 엔티티 구조는 셀프조인으로 참조하였습니다.
 
 댓글의 깊이별로 먼저 조회하고 서버단에서 Stream Api를 이용하여 부모 댓글이 해당하는 자식 댓글을 가지고 있는 중첩 형태로 구현하였습니다.
+
+[댓글 정렬](https://github.com/HyungGon86/springaws/blob/master/src/main/java/study/springaws/domain/comment/service/CommentService.java#L54)
 
 
 ### 계층형 카테고리
