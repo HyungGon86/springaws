@@ -1,12 +1,30 @@
+#spring:
+#  profiles:
+#    active: local
+---
 spring:
   profiles:
-    active: local
+    group:
+      dev:
+        - common
+        - development
+        - port_8080
+      production-set1:
+        - common
+        - production
+        - port_9001
+      production-set2:
+        - common
+        - production
+        - port_9002
+---
+spring:
+  config:
+    activate:
+      on-profile: common
 
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: springaws
-    url: jdbc:mysql://localhost:3306/springaws?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
-    password: gudrhs11
+  pid:
+    file: /home/ec2-user/app/step2/springaws.pid
 
   jpa:
     open-in-view: false
@@ -18,9 +36,6 @@ spring:
     #    show-sql: true
     hibernate:
       ddl-auto: update
-
-  pid:
-    file: /home/ec2-user/app/step2/springaws.pid
 
   servlet:
     multipart:
@@ -38,29 +53,16 @@ spring:
             scope:
               - email
               - profile
-server:
-  port: 8080
 
 logging:
   level:
     org.hibernate.SQL: debug
 #    org.hibernate.type: trace
-
-file:
-  dir: C:/springAws/attachedFiles/
-  thumbnailDir : C:/springAws/thumbnail/
-
 ---
 spring:
   config:
     activate:
-      on-profile: set1
-
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: springaws
-    url: jdbc:mysql://springboot-webservice.c7brf6sdt5ut.ap-northeast-2.rds.amazonaws.com:3306/webservice?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
-    password: gudrhs11
+      on-profile: port_8080
 
 server:
   port: 8080
@@ -68,7 +70,38 @@ server:
 spring:
   config:
     activate:
-      on-profile: set2
+      on-profile: port_9001
+
+server:
+  port: 9001
+---
+spring:
+  config:
+    activate:
+      on-profile: port_9002
+
+server:
+  port: 9002
+---
+spring:
+  config:
+    activate:
+      on-profile: development
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: springaws
+    url: jdbc:mysql://localhost:3306/springaws?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
+    password: gudrhs11
+
+file:
+  dir: C:/springAws/attachedFiles/
+  thumbnailDir : C:/springAws/thumbnail/
+---
+spring:
+  config:
+    activate:
+      on-profile: production
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -76,8 +109,8 @@ spring:
     url: jdbc:mysql://springboot-webservice.c7brf6sdt5ut.ap-northeast-2.rds.amazonaws.com:3306/webservice?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
     password: gudrhs11
 
-server:
-  port: 8081
+---
+
 
 
 
