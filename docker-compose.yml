@@ -1,0 +1,48 @@
+version: '3'
+services:
+
+  blog-project:
+    build:
+      context: ../..
+      dockerfile: ../../Dockerfile
+    image: gongongon/blog-project
+    environment:
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
+    container_name: ${SPRING_PROFILES_ACTIVE}
+    expose:
+      - 8080
+    volumes:
+      - ./secret:/secret
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+
+  nginx:
+    container_name: nginx
+    image: nginx:latest
+    restart: always
+    volumes:
+      - /etc/nginx:/etc/nginx/
+      - /etc/letsencrypt:/etc/letsencrypt
+    ports:
+      - 80:80
+      - 443:443
+    depends_on:
+      - blog-project
+      - db
+
+  db:
+    container_name: db
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_DATABASE: webservice
+      MYSQL_USER: springaws
+      MYSQL_PASSWORD: gudrhs11
+      MYSQL_ROOT_PASSWORD: gudrhs11
+    volumes:
+      - dbdata:/var/lib/mysql
+    ports:
+      - 3306:3306
+  
