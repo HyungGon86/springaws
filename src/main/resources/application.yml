@@ -115,6 +115,9 @@ spring:
     url: jdbc:mysql://db:3306/webservice?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
     password: gudrhs11
 
+file:
+  dir: /home/ec2-user/deploy/upload/attachedFiles/
+  thumbnailDir : /home/ec2-user/deploy/upload/thumbnail/
 ---
 
 
