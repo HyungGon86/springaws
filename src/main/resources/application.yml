@@ -96,7 +96,7 @@ spring:
 
 file:
   dir: C:/springAws/attachedFiles/
-  thumbnailDir : C:/springAws/thumbnail/
+  thumbnailDir: C:/springAws/thumbnail/
 ---
 spring:
   config:
@@ -112,12 +112,12 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: springaws
-    url: jdbc:mysql://db:3306/webservice?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
+    url: jdbc:mysql://db:3306/webservice?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
     password: gudrhs11
 
 file:
   dir: /app/attachedFiles/
-  thumbnailDir : /app/thumbnail/
+  thumbnailDir: /app/thumbnail/
 ---
 
 
