@@ -103,17 +103,17 @@ spring:
     activate:
       on-profile: production
 
-#  datasource:
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#    username: springaws
-#    url: jdbc:mysql://springboot-webservice.c7brf6sdt5ut.ap-northeast-2.rds.amazonaws.com:3306/webservice?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
-#    password: gudrhs11 이거는 aws 인스턴스 자체 url
-
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: springaws
-    url: jdbc:mysql://db:3306/webservice?useUnicode=true&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true&useSSL=false
-    password: gudrhs11
+    url: jdbc:mysql://springboot-webservice.c7brf6sdt5ut.ap-northeast-2.rds.amazonaws.com:3306/webservice?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
+    password: gudrhs11 # 이거는 aws 인스턴스 자체 url
+
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    username: springaws
+#    url: jdbc:mysql://db:3306/webservice?useUnicode=true&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true&useSSL=false
+#    password: gudrhs11
 
 file:
   dir: /app/attachedFiles/
