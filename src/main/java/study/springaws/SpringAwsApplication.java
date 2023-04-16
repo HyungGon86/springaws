@@ -39,5 +39,4 @@ public class SpringAwsApplication {
         return new ThreadLocalLogTrace();
     }
 
-
 }
