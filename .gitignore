@@ -194,3 +194,6 @@ gradle-app.setting
 *.hprof
 
 # End of https://www.toptal.com/developers/gitignore/api/intellij,java,gradle,windows
+
+# 설정파일은 github에 올리지 않는다
+/src/main/resources/application.yml
